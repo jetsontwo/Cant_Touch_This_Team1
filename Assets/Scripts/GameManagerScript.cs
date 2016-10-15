@@ -18,7 +18,7 @@ public class GameManagerScript : MonoBehaviour
         {
             player1_is_it = true;
         }
-        gameTimer.startTimer(gameMaxTimer);
+        gameTimer.timeLeft = gameMaxTimer;
     }
 
     public void NotifyTouched()
