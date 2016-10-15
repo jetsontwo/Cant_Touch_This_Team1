@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player_Movements : MonoBehaviour {
 
-    public float speed, max_vel;
+    public float acceleration, max_vel;
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
     
@@ -38,11 +38,11 @@ public class Player_Movements : MonoBehaviour {
 
         if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel)
         {
-            rb.velocity += new Vector2(horiz_move * speed, vert_move * speed);
+            rb.velocity += new Vector2(horiz_move * acceleration, vert_move * acceleration);
         }
         else
         {
-            rb.velocity -= new Vector2(rb.velocity.x/5, rb.velocity.y/5);
+            rb.velocity -= new Vector2(rb.velocity.x/10, rb.velocity.y/10);
         }
 	}
 }

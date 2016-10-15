@@ -100,6 +100,7 @@ GameObject:
   - 4: {fileID: 967919595}
   - 212: {fileID: 967919594}
   - 114: {fileID: 967919596}
+  - 50: {fileID: 967919597}
   m_Layer: 0
   m_Name: $CorgSprites_3
   m_TagString: Untagged
@@ -148,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 967919593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 4.3810234, y: -0.55239, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -164,12 +165,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  max_vel: 10
-  left_move: left_arrow
-  right_move: right_arrow
-  up_move: down_arrow
-  down_move: up_arrow
+  acceleration: 0.3
+  max_vel: 7.5
+  left_move: left
+  right_move: right
+  up_move: up
+  down_move: down
+--- !u!50 &967919597
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967919593}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1360458974
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +285,7 @@ GameObject:
   - 4: {fileID: 1506029525}
   - 212: {fileID: 1506029524}
   - 114: {fileID: 1506029526}
+  - 50: {fileID: 1506029527}
   m_Layer: 0
   m_Name: $CorgSprites_1
   m_TagString: Untagged
@@ -315,7 +334,7 @@ Transform:
   m_GameObject: {fileID: 1506029523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.2952592, y: 0.17143117, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -331,9 +350,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  max_vel: 10
-  left_move: A
-  right_move: D
-  up_move: W
-  down_move: S
+  acceleration: 0.3
+  max_vel: 7.5
+  left_move: a
+  right_move: d
+  up_move: w
+  down_move: s
+--- !u!50 &1506029527
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506029523}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
