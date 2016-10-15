@@ -46,8 +46,45 @@ public class Player_Movements : MonoBehaviour {
         }
 
         if (horiz_move != 0 || vert_move != 0)
-            am.SetBool("moving", true);
+        {
+            if(horiz_move > 0)
+            {
+                am.SetBool("moving_right", true);
+                am.SetBool("moving_left", false);
+            }
+            else if (horiz_move < 0)
+            {
+                am.SetBool("moving_left", true);
+                am.SetBool("moving_right", false);
+            }
+            else
+            {
+                am.SetBool("moving_left", false);
+                am.SetBool("moving_right", false);
+            }
+
+            if(vert_move > 0)
+            {
+                am.SetBool("moving_up", true);
+                am.SetBool("moving_down", false);
+            }
+            else if(vert_move < 0)
+            {
+                am.SetBool("moving_down", true);
+                am.SetBool("moving_up", false);
+            }
+            else
+            {
+                am.SetBool("moving_up", false);
+                am.SetBool("moving_down", false);
+            }
+        }
         else
-            am.SetBool("moving", false);
-	}
+        {
+            am.SetBool("moving_left", false);
+            am.SetBool("moving_right", false);
+            am.SetBool("moving_up", false);
+            am.SetBool("moving_down", false);
+        }
+    }
 }
