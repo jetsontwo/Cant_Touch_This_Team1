@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum State
+{
+    Ground,
+    Water,
+    Air
+}
+
 public class MapForFish : MonoBehaviour {
     
     public Sprite[] boardSprites;
     public Sprite wallSprite;
 
-    private int[,] heights = new int[,]{{0, 0, 1, 1, 1, 1, 1, 3},
-                                        {0, 0, 1, 1, 1, 1, 1, 1},
-                                        {0, 0, 1, 1, 1, 1, 1, 1},
+    private int[,] heights = new int[,]{{1, 1, 1, 1, 1, 1, 1, 3},
+                                        {1, 0, 1, 1, 1, 1, 1, 1},
+                                        {1, 0, 1, 1, 1, 1, 1, 1},
                                         {0, 0, 1, 1, 1, 1, 1, 1},
                                         {0, 0, 1, 1, 1, 1, 1, 1},
                                         {0, 0, 1, 1, 1, 1, 1, 1},
@@ -19,9 +26,9 @@ public class MapForFish : MonoBehaviour {
      * 0 = Sand
      */
 
-    private int[,] tiles = new int[,]{{1, 1, 0, 0, 0, 0, 0, 1},
-                                      {1, 1, 0, 0, 0, 0, 0, 0},
-                                      {1, 1, 0, 0, 0, 0, 0, 0},
+    private int[,] tiles = new int[,]{{0, 0, 0, 0, 0, 0, 0, 1},
+                                      {0, 1, 0, 0, 0, 0, 0, 0},
+                                      {0, 1, 0, 0, 0, 0, 0, 0},
                                       {1, 1, 0, 0, 0, 0, 0, 0},
                                       {1, 1, 0, 0, 0, 0, 0, 0},
                                       {1, 1, 0, 0, 0, 0, 0, 0},
@@ -53,46 +60,25 @@ public class MapForFish : MonoBehaviour {
         }
     }
 
-    public int GetValidX(int oldx, int y, int newx, int maxHeight)
+    public void GetTile(float screenx, float screeny, int height, out int x, out int y, out int newheight)
     {
-        int retx = newx;
-        if (newx < 0)
-        {
-            retx = 0;
-        }
-        if (newx >= tiles.GetLength(0))
-        {
-            retx = tiles.GetLength(0) - 1;
-        }
-        // Get the maximum distance a player can go without running into something they can't jump over.
-        while (retx != oldx && heights[retx, y] - heights[oldx, y] > maxHeight)
-        {
-            retx = retx + ((retx < oldx) ? 1 : -1);
-        }
-        return retx;
-    }
-
-    public int GetValidY(int x, int oldy, int newy, int maxHeight)
-    {
-        int rety = newy;
-        if (newy < 0)
-        {
-            rety = 0;
-        }
-        if (newy >= tiles.GetLength(1))
-        {
-            rety = tiles.GetLength(1) - 1;
-        }
-        // Get the maximum distance a player can go without running into something they can't jump over.
-        while (rety != oldy && heights[x, rety] - heights[x, oldy] > maxHeight)
-        {
-            rety = rety + ((rety < oldy) ? 1 : -1);
-        }
-        return rety;
+        x = Mathf.RoundToInt(screenx);
+        y = Mathf.RoundToInt(screeny) - height;
+        newheight = heights[x, y];
     }
 
     public int GetHeightAt(int x, int y)
     {
         return heights[x, y];
+    }
+
+    public int GetWidth()
+    {
+        return tiles.GetLength(0);
+    }
+
+    public int GetHeight()
+    {
+        return tiles.GetLength(1);
     }
 }
