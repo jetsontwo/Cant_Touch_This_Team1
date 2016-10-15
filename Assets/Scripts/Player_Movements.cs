@@ -6,8 +6,7 @@ public class Player_Movements : MonoBehaviour {
     public float acceleration, max_vel;
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
-    public Animation am;
-    
+    public Animator am;
 
 	// Use this for initialization
 	void Start () {
@@ -46,9 +45,9 @@ public class Player_Movements : MonoBehaviour {
             rb.velocity -= new Vector2(rb.velocity.x/10, rb.velocity.y/10);
         }
 
-        if(horiz_move != 0 || vert_move != 0)
-        {
-            am.
-        }
+        if (horiz_move != 0 || vert_move != 0)
+            am.SetBool("moving", true);
+        else
+            am.SetBool("moving", false);
 	}
 }

@@ -210,9 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e2d795bbd39040943f5150e54cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaxTimer: 5
+  gameMaxTimer: 0
   invincibilityMaxTimer: 5
-  gameTimer: {fileID: 1131328557}
+  gameTimer: {fileID: 0}
 --- !u!4 &493764626
 Transform:
   m_ObjectHideFlags: 0
@@ -307,6 +307,7 @@ MonoBehaviour:
   right_move: right
   up_move: up
   down_move: down
+  am: {fileID: 0}
 --- !u!50 &967919597
 Rigidbody2D:
   serializedVersion: 2
@@ -351,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553aa35739df22542953b41988e7770a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stop: 1
+  timeLeft: 300
   text: {fileID: 1251535997}
 --- !u!4 &1131328558
 Transform:
@@ -552,6 +553,7 @@ GameObject:
   - 212: {fileID: 1506029524}
   - 114: {fileID: 1506029526}
   - 50: {fileID: 1506029527}
+  - 95: {fileID: 1506029528}
   m_Layer: 0
   m_Name: $CorgSprites_1
   m_TagString: Untagged
@@ -622,6 +624,7 @@ MonoBehaviour:
   right_move: d
   up_move: w
   down_move: s
+  am: {fileID: 1506029528}
 --- !u!50 &1506029527
 Rigidbody2D:
   serializedVersion: 2
@@ -639,6 +642,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &1506029528
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506029523}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3bac05e799857d2468d71f61fac3beba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1741913053
 GameObject:
   m_ObjectHideFlags: 0
