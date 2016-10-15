@@ -90,11 +90,7 @@ public class Player_Movements : MonoBehaviour {
                 am.SetBool("moving_left", true);
                 am.SetBool("moving_right", false);
             }
-            else
-            {
-                am.SetBool("moving_left", false);
-                am.SetBool("moving_right", false);
-            }
+
 
             if(vert_move > 0)
             {
@@ -106,11 +102,7 @@ public class Player_Movements : MonoBehaviour {
                 am.SetBool("moving_down", true);
                 am.SetBool("moving_up", false);
             }
-            else
-            {
-                am.SetBool("moving_up", false);
-                am.SetBool("moving_down", false);
-            }
+
         }
         else
         {
