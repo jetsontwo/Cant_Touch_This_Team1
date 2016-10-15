@@ -19,11 +19,23 @@ public class Camera_Behavior : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         //Puts camera between the 2 players
-        transform.position = (object1.transform.position + object2.transform.position) / 2 + new Vector3(0, 0, -10);
-        mainCamera.orthographicSize = Mathf.Clamp(Vector2.Distance(object1.transform.position, object2.transform.position) / cameraZoomRatio * 5 * mainCamera.aspect, minCameraSize, 50);
+        Vector3 midpointBetweenPlayers = (object1.transform.position + object2.transform.position) / 2;
+        transform.position = midpointBetweenPlayers + new Vector3(0, 0, -10);
+
+
+        changeCameraSize();
 
         
 	}
+
+    void changeCameraSize() {
+        float distanceBetweenPlayers = Vector2.Distance(object1.transform.position, object2.transform.position);
+        float playersBounding = 5 * mainCamera.aspect / 11.75f;
+
+        float adjustmentRatio = 5 / cameraZoomRatio * mainCamera.aspect;
+        //        mainCamera.orthographicSize = Mathf.Clamp(Mathf.Pow(distanceBetweenPlayers * adjustmentRatio, 1/1.1f), minCameraSize, distanceBetweenPlayers * playersBounding );
+        mainCamera.orthographicSize = Mathf.Clamp(distanceBetweenPlayers * adjustmentRatio, minCameraSize, Mathf.Max(distanceBetweenPlayers * playersBounding, minCameraSize));
+    }
 
 
 }
