@@ -98,11 +98,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 159604808}
-  - 33: {fileID: 159604807}
-  - 135: {fileID: 159604806}
-  - 23: {fileID: 159604805}
   - 114: {fileID: 159604804}
   - 114: {fileID: 159604803}
+  - 212: {fileID: 159604805}
   m_Layer: 0
   m_Name: FISH
   m_TagString: Untagged
@@ -138,56 +136,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   x: 0
-  y: 0
+  y: 7
   longJumpRange: 0
---- !u!23 &159604805
-MeshRenderer:
+  heightOffset: 0.2
+--- !u!212 &159604805
+SpriteRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 159604802}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
-  m_PreserveUVs: 1
+  m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!135 &159604806
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 159604802}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &159604807
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 159604802}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Sprite: {fileID: 21300002, guid: 4817e8d64587d6145ba376bb68dd51b4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!4 &159604808
 Transform:
   m_ObjectHideFlags: 0
@@ -228,6 +212,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d17ea97f75ab1429d2119629ffe47b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardSprites:
+  - {fileID: 21300000, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
+  - {fileID: 21300002, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
+  wallSprite: {fileID: 21300004, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
 --- !u!4 &1264318577
 Transform:
   m_ObjectHideFlags: 0
@@ -253,6 +241,7 @@ GameObject:
   - 92: {fileID: 1917515930}
   - 124: {fileID: 1917515929}
   - 81: {fileID: 1917515928}
+  - 114: {fileID: 1917515933}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -328,3 +317,16 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1917515933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1917515927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a723be7e8fc1e534ea75315bb006b445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  object1: {fileID: 159604802}
+  object2: {fileID: 159604802}
