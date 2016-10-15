@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Load_Level : MonoBehaviour {
+public class ButtonPlay : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -14,8 +14,8 @@ public class Load_Level : MonoBehaviour {
 	
 	}
 
-    public void load_level()
+    void onClick()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("game_scene");
     }
 }
