@@ -3,15 +3,18 @@ using System.Collections;
 
 public class Player_Movements : MonoBehaviour {
 
-    public float acceleration, max_vel;
+    public float acceleration, max_vel, hop_timer, hop_decrease, hop_speed;
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
     public Animator am;
+    public bool water_movement;
+    private float hop_timer_buffer;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
-	}
+        hop_timer_buffer = hop_timer;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,14 +39,32 @@ public class Player_Movements : MonoBehaviour {
             vert_move -= 1;
         }
 
-        if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel)
+        if (water_movement)
         {
-            rb.velocity += new Vector2(horiz_move * acceleration, vert_move * acceleration);
+            if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel)
+            {
+                rb.velocity += new Vector2(horiz_move * acceleration, vert_move * acceleration);
+            }
+            else
+            {
+                rb.velocity -= new Vector2(rb.velocity.x / 10, rb.velocity.y / 10);
+            }
         }
         else
         {
-            rb.velocity -= new Vector2(rb.velocity.x/10, rb.velocity.y/10);
+            if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel && hop_timer <= 0)
+            {
+                print("hi");
+                rb.velocity += new Vector2(horiz_move * acceleration * hop_speed, vert_move * acceleration * hop_speed);
+                hop_timer = hop_timer_buffer;
+            }
+            else
+            {
+                rb.velocity -= new Vector2(rb.velocity.x / 10, rb.velocity.y / 10);
+            }
+            hop_timer -= hop_decrease;
         }
+
 
         if (horiz_move != 0 || vert_move != 0)
         {
