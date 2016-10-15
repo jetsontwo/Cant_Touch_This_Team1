@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
+    public float gameMaxTimer;
     public float invincibilityMaxTimer;
+    public Timer gameTimer;
 
     private bool player1_is_it = false;
     private float invincibilityTimer;
@@ -15,7 +18,8 @@ public class GameManagerScript : MonoBehaviour
         {
             player1_is_it = true;
         }
-	}
+        gameTimer.startTimer(gameMaxTimer);
+    }
 
     public void NotifyTouched()
     {

@@ -1,47 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class Timer : MonoBehaviour {
+public class Timer : MonoBehaviour{
 
-    public float timeLeft = 300.0f;
+    private float timeLeft;
     public bool stop = true;
-
-    private float minutes;
-    private float seconds;
-
     public Text text;
 
     public void startTimer(float from)
     {
         stop = false;
         timeLeft = from;
-        Update();
-        StartCoroutine(updateCoroutine());
     }
 
     void Update()
     {
-        if (stop) return;
-        timeLeft -= Time.deltaTime;
-
-        minutes = Mathf.Floor(timeLeft / 60);
-        seconds = timeLeft % 60;
-        if (seconds > 59) seconds = 59;
-        if (minutes < 0)
+        if (!stop)
         {
-            stop = true;
-            minutes = 0;
-            seconds = 0;
-        }
-    }
-
-    private IEnumerator updateCoroutine()
-    {
-        while (!stop)
-        {
-            text.text = string.Format("{0:0}:{1:00}", minutes, seconds);
-            yield return new WaitForSeconds(0.2f);
+            timeLeft -= Time.deltaTime;
+            if (timeLeft <= 0)
+            {
+                stop = true;
+                text.text = "0:00";
+            }
+            else
+            {
+                text.text = string.Format("{0:0}:{1:00}", Mathf.Floor(timeLeft / 60), timeLeft % 60);
+            }
         }
     }
 }
