@@ -17,7 +17,7 @@ public class GameManagerScript : MonoBehaviour
     private int player1_score;
     private int player2_score;
     private Color green = new Color(0, 255, 0);
-    private Color white = new Color(255, 255, 255, 255);
+    private Color white = new Color(255, 255, 255);
     private Color red = new Color(255, 0, 0);
 
     
