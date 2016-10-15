@@ -3,24 +3,16 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour{
 
-    private float timeLeft;
-    public bool stop = true;
+    public float timeLeft;
     public Text text;
-
-    public void startTimer(float from)
-    {
-        stop = false;
-        timeLeft = from;
-    }
 
     void Update()
     {
-        if (!stop)
+        if (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0)
             {
-                stop = true;
                 text.text = "0:00";
             }
             else
