@@ -5,10 +5,12 @@ public class Timer : MonoBehaviour{
 
     public float timeLeft;
     public Text text;
-    public Text gameOver;
     public int timeShow;
     public int regularFont;
     public int countDownFont;
+    private Color white = new Color(255, 255, 255);
+    private Color yello = new Color(255, 255, 0);
+    private Color red = new Color(255, 0, 0);
 
     void Update()
     {
@@ -19,7 +21,7 @@ public class Timer : MonoBehaviour{
             if (timeShow >= 30)
             {
                 text.fontSize = regularFont;
-                text.color = new Color(255, 255, 255);
+                text.color = white;
                 if (timeShow >= 60)
                 {
                     text.text = string.Format("{0:0}:{1:00}", Mathf.Floor(timeShow / 60), timeShow % 60);
@@ -33,25 +35,15 @@ public class Timer : MonoBehaviour{
             {
                
                 text.fontSize = countDownFont;
-                text.color = new Color(255, 255, 0);
+                text.color = yello;
                 text.text = timeShow.ToString();
-            }
-            else if (timeShow > 0)
-            {
-                text.fontSize = countDownFont;
-                text.color = new Color(255, 0, 0);
-                text.text = "0" + timeShow.ToString();
             }
             else
             {
                 text.fontSize = countDownFont;
-                text.color = new Color(255, 0, 0);
-                text.text = "00";
-                gameOver.color = text.color;
-                gameOver.fontSize = 50;
-                gameOver.text = "GAME OVER";
-            }
-            
+                text.color = red;
+                text.text = "0" + timeShow.ToString();
+            }          
         }
     }
 }
