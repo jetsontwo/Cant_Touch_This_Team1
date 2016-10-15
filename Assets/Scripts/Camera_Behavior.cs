@@ -7,6 +7,8 @@ public class Camera_Behavior : MonoBehaviour {
     private float cameraZoomRatio;
     private float minCameraSize;
 
+    private float baseCamSize, totalBaseCamSize, sizeYLimit;
+
     public GameObject object1, object2;
 
 	// Use this for initialization
@@ -14,6 +16,10 @@ public class Camera_Behavior : MonoBehaviour {
         mainCamera = GetComponent<Camera>();
         cameraZoomRatio = 8;
         minCameraSize = 5;
+
+        baseCamSize = mainCamera.orthographicSize;
+        totalBaseCamSize = baseCamSize * 2;
+        sizeYLimit = totalBaseCamSize * 5;
 	}
 	
 	// Update is called once per frame
@@ -30,11 +36,15 @@ public class Camera_Behavior : MonoBehaviour {
 
     void changeCameraSize() {
         float distanceBetweenPlayers = Vector2.Distance(object1.transform.position, object2.transform.position);
-        float playersBounding = 5 * mainCamera.aspect / 11.75f;
+        float playersBoundingY = minCameraSize * mainCamera.aspect / totalBaseCamSize;
+        float adjustmentRatioY = minCameraSize / (totalBaseCamSize * 3/4) * mainCamera.aspect;
+        float difference = adjustmentRatioY * distanceBetweenPlayers - playersBoundingY * distanceBetweenPlayers;
 
-        float adjustmentRatio = 5 / cameraZoomRatio * mainCamera.aspect;
+        float linearTransitionForCamera = distanceBetweenPlayers * playersBoundingY + difference * (1 - (distanceBetweenPlayers) / sizeYLimit);
+        print(linearTransitionForCamera);
+        //print(distanceBetweenPlayers * playersBounding + " | " + difference * (distanceBetweenPlayers / 50) + " | " + linearTransitionForCamera + " | " + distanceBetweenPlayers * playersBounding);
         //        mainCamera.orthographicSize = Mathf.Clamp(Mathf.Pow(distanceBetweenPlayers * adjustmentRatio, 1/1.1f), minCameraSize, distanceBetweenPlayers * playersBounding );
-        mainCamera.orthographicSize = Mathf.Clamp(distanceBetweenPlayers * adjustmentRatio, minCameraSize, Mathf.Max(distanceBetweenPlayers * playersBounding, minCameraSize));
+        mainCamera.orthographicSize = Mathf.Clamp(linearTransitionForCamera, minCameraSize, Mathf.Max(sizeYLimit, minCameraSize));
     }
 
 
