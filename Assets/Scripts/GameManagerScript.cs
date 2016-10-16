@@ -20,6 +20,7 @@ public class GameManagerScript : MonoBehaviour
     public AudioSource audioslap;
     public Crown_Collision cc;
     public Camera mainCamera;
+    private Camera_Behavior camBehavior;
 
     private string player_has_crown = "None";
     private float invincibilityTimer;
@@ -49,6 +50,7 @@ public class GameManagerScript : MonoBehaviour
         gameTimer.timeLeft = gameMaxTimer;
 
         stunDuration = 1.25f;
+        camBehavior = mainCamera.GetComponent<Camera_Behavior>();
     }
     
     public void NotifyTouched()
@@ -79,6 +81,8 @@ public class GameManagerScript : MonoBehaviour
         }
         else
             return;
+
+        camBehavior.shakeCam = true;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
