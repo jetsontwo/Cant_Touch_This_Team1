@@ -8,12 +8,17 @@ public class Timer : MonoBehaviour{
     public int timeShow;
     public int regularFont;
     public int countDownFont;
+    public AudioSource countdown_10_sec;
     private Color white = new Color(255, 255, 255);
     private Color yello = new Color(255, 255, 0);
     private Color red = new Color(255, 0, 0);
 
     void Update()
     {
+        if ((int)timeLeft == 11)
+        {
+            countdown_10_sec.Play();
+        }
         if (timeLeft >= 0)
         {
             timeLeft -= Time.deltaTime;
