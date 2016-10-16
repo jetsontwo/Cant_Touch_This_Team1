@@ -128,13 +128,16 @@ public class Player_Movements : MonoBehaviour {
         vel += moveAccel + accel;
 
         // Cap 2D velocity to max velocity
-        Vector2 velcap = new Vector3(vel.x, vel.y);
-        float maxV = (water_movement)? max_vel : hop_speed;
-        if (velcap.magnitude > maxV)
+        if (!stop_moving)
         {
-            velcap = velcap.normalized * maxV;
-            vel.x = velcap.x;
-            vel.y = velcap.y;
+            Vector2 velcap = new Vector3(vel.x, vel.y);
+            float maxV = (water_movement) ? max_vel : hop_speed;
+            if (velcap.magnitude > maxV)
+            {
+                velcap = velcap.normalized * maxV;
+                vel.x = velcap.x;
+                vel.y = velcap.y;
+            }
         }
         
         // Set velocity to zero once it gets low enough
