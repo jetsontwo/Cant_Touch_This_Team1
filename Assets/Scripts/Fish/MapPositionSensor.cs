@@ -6,8 +6,8 @@ public class MapPositionSensor : MonoBehaviour
     public SpriteRenderer sprite;
     public GameObject shadow;
 
-    private MapForFish map;
-    private Player_Movements movements;
+    public MapForFish map;
+    public Player_Movements movements;
     private Vector3 lastPos;
     public int x;
     public int y;
@@ -18,9 +18,7 @@ public class MapPositionSensor : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        map = FindObjectOfType<MapForFish>();
         map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y, out height, out waterheight);
-        movements = GetComponent<Player_Movements>();
         lastPos = this.transform.position;
     }
 
