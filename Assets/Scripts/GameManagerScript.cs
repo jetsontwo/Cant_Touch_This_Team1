@@ -18,8 +18,9 @@ public class GameManagerScript : MonoBehaviour
     private float stunDuration;
     public int pushPower;
     public AudioSource audioslap;
+    public Crown_Collision cc;
 
-    private bool player1_is_running = false;
+    private string player_running = "None";
     private float invincibilityTimer;
 
     private int player1_score;
@@ -40,10 +41,6 @@ public class GameManagerScript : MonoBehaviour
 
         backToMain.gameObject.SetActive(false);
         playAgain.gameObject.SetActive(false);
-        if (Random.value > 0.5)
-        {
-            player1_is_running = true;
-        }
         gameTimer.timeLeft = gameMaxTimer;
 
         stunDuration = 1.25f;
@@ -52,9 +49,8 @@ public class GameManagerScript : MonoBehaviour
     public void NotifyTouched()
     {
         if (player1rb.IsTouching(player2.GetComponent<Collider2D>())) {
-            if (invincibilityTimer <= 0) {
+            if (invincibilityTimer <= 0 && player_running != "None") {
                 stunPlayer();
-                player1_is_running = !player1_is_running;
                 invincibilityTimer = invincibilityMaxTimer;
             }
         }
@@ -63,8 +59,19 @@ public class GameManagerScript : MonoBehaviour
 
     public void stunPlayer() {
         //Stun the player who is not it
-        GameObject stunnedPlayer = player1_is_running ? player1 : player2;
-        GameObject otherPlayer = player1_is_running ? player2 : player1;
+        GameObject stunnedPlayer = null;
+        GameObject otherPlayer = null;
+
+        if (player_running == "Player_1")
+        {
+            stunnedPlayer = player1;
+            otherPlayer = player2;
+        }
+        else if(player_running == "Player_2")
+        {
+            stunnedPlayer = player2;
+            otherPlayer = player1;
+        }
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
@@ -76,6 +83,7 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator spinPlayer(float anglesPerSecond, GameObject player) {
         audioslap.Play();
+        cc.Knocked_Off();
         float delay = 0.05f;
         float stunTimeLeft = stunDuration;
         int rotateLeftOrRight = Random.Range(-1, 1) >= 0 ? 1 : -1;
@@ -103,10 +111,15 @@ public class GameManagerScript : MonoBehaviour
             {
                 invincibilityTimer -= Time.deltaTime;
             }
-            if (player1_is_running)
+            player_running = cc.player_running;
+
+
+            if (player_running.Equals("Player_1"))
                 ++player1_score;
-            else
+            else if(player_running.Equals("Player_2"))
                 ++player2_score;
+
+
             if (player1_score > player2_score)
             {
                 score_1.color = green;
