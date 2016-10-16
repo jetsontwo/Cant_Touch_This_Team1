@@ -424,7 +424,7 @@ MonoBehaviour:
   playAgain: {fileID: 1304067071}
   player1: {fileID: 1506029523}
   player2: {fileID: 967919593}
-  pushPower: 100
+  pushPower: 13
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
   mainCamera: {fileID: 1360458978}
@@ -785,7 +785,6 @@ MonoBehaviour:
   falling: 0
   jumping: 0
   stop_moving: 0
-  stunned: 0
   vel: {x: 0, y: 0, z: 0}
   accel: {x: 0, y: 0, z: 0}
 --- !u!50 &967919597
@@ -1008,6 +1007,7 @@ MonoBehaviour:
   timeShow: 0
   regularFont: 30
   countDownFont: 50
+  countdown_10_sec: {fileID: 0}
 --- !u!4 &1131328558
 Transform:
   m_ObjectHideFlags: 0
@@ -1790,7 +1790,6 @@ MonoBehaviour:
   falling: 0
   jumping: 0
   stop_moving: 0
-  stunned: 0
   vel: {x: 0, y: 0, z: 0}
   accel: {x: 0, y: 0, z: 0}
 --- !u!50 &1506029527
