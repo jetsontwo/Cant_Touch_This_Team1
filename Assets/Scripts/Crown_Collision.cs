@@ -51,7 +51,6 @@ public class Crown_Collision : MonoBehaviour {
 
     void Update()
     {
-        print(rb.velocity);
         cooldown -= Time.deltaTime;
         if (player_has_crown != NONE)
             transform.localPosition = new Vector3(0, .75f, 0);

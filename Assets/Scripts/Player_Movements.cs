@@ -16,11 +16,13 @@ public class Player_Movements : MonoBehaviour {
 
     private Rigidbody2D rb;
     private float hop_timer_buffer;
+    private Vector3 prevPos;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         hop_timer_buffer = hop_timer;
+        prevPos = new Vector3();
     }
 	
 	// Update is called once per frame
@@ -119,8 +121,19 @@ public class Player_Movements : MonoBehaviour {
         }
 
         // Check map for other velocities, accelerations
+        Vector3 newVel = vel;
+        Vector3 newPos = this.transform.position;
+        mapPos.ApplyMapFactors(accel, newVel, newPos, prevPos, out accel, out newVel, out newPos);
 
         // Apply accelerations to velocity
+        if (newPos != this.transform.position)
+        {
+            this.transform.position = newPos;
+        }
+        if (newVel != vel)
+        {
+            vel = newVel;
+        }
         moveAccel *= Time.deltaTime;
         accel *= Time.deltaTime;
         vel += moveAccel + accel;
@@ -170,6 +183,8 @@ public class Player_Movements : MonoBehaviour {
         {
             am.enabled = true;
         }
+
+        prevPos = this.transform.position;
     }
 
     public void SetVelocity(float x, float y, float h)
