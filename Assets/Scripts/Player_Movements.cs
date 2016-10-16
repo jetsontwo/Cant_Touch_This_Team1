@@ -145,9 +145,15 @@ public class Player_Movements : MonoBehaviour {
             stop_falling = true;
         }
 
+
+        //Makes the fish face the last direction of input and turns off the animation controller to keep the fish from returning to its default position
         if(!(am.GetBool("moving_up") || am.GetBool("moving_down") || am.GetBool("moving_left") || am.GetBool("moving_right")))
         {
             Get_Idle();
+        }
+        else
+        {
+            am.enabled = true;
         }
         
         
@@ -194,6 +200,7 @@ public class Player_Movements : MonoBehaviour {
 
     private void Get_Idle()
     {
+        am.enabled = false;
         if (last_dir == "right")
         {
             if (water_movement)
