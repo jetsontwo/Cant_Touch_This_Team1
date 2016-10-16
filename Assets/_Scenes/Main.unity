@@ -427,6 +427,7 @@ MonoBehaviour:
   pushPower: 100
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
+  mainCamera: {fileID: 1360458978}
 --- !u!4 &493764626
 Transform:
   m_ObjectHideFlags: 0
@@ -737,7 +738,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967919593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 3, z: 0}
+  m_LocalPosition: {x: 6.82, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1229,7 +1230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crown_holder: {fileID: 625462149}
-  player_running: 
+  player_has_crown: 
 --- !u!50 &1268448197
 Rigidbody2D:
   serializedVersion: 2
@@ -1616,6 +1617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   object1: {fileID: 1506029523}
   object2: {fileID: 967919593}
+  shakeCam: 0
 --- !u!1 &1471054083
 GameObject:
   m_ObjectHideFlags: 0
