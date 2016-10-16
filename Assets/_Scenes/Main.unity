@@ -550,6 +550,7 @@ MonoBehaviour:
   am: {fileID: 967919598}
   water_movement: 0
   falling: 0
+  Idles: []
 --- !u!50 &967919597
 Rigidbody2D:
   serializedVersion: 2
@@ -1248,8 +1249,9 @@ MonoBehaviour:
   up_move: w
   down_move: s
   am: {fileID: 1506029528}
-  water_movement: 1
+  water_movement: 0
   falling: 0
+  Idles: []
 --- !u!50 &1506029527
 Rigidbody2D:
   serializedVersion: 2

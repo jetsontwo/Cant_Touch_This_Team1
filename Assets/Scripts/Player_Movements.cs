@@ -109,7 +109,7 @@ public class Player_Movements : MonoBehaviour {
 
         if (rb.velocity.x != 0 || rb.velocity.y != 0)
         {
-            if(rb.velocity.x > -threshold && rb.velocity.x < threshold)
+            if(rb.velocity.x < -threshold || rb.velocity.x > threshold)
             {
                 if(rb.velocity.x > 0)
                 {
@@ -123,7 +123,7 @@ public class Player_Movements : MonoBehaviour {
                 }
             }
 
-            if(rb.velocity.y > -threshold && rb.velocity.y < threshold)
+            if(rb.velocity.y < -threshold || rb.velocity.y > threshold)
             {
                 if (rb.velocity.y > 0)
                 {
