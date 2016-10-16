@@ -16,6 +16,7 @@ public class GameManagerScript : MonoBehaviour
     public GameObject player2;
     private Rigidbody2D player1rb, player2rb;
     private float stunDuration;
+    public int pushPower;
 
     private bool player1_is_it = false;
     private float invincibilityTimer;
@@ -64,25 +65,12 @@ public class GameManagerScript : MonoBehaviour
         GameObject stunnedPlayer = player1_is_it ? player1 : player2;
         GameObject otherPlayer = player1_is_it ? player2 : player1;
 
-        stunnedPlayer.GetComponent<Player_Movements>().hop_timer = 100;
-        Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * 100;
+        Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         player2rb.velocity = newVelocity;
 
         spinCoroutine = spinPlayer(1300, stunnedPlayer);
         StartCoroutine(spinCoroutine);
-
-        //if (player1_is_it) {
-        //    player2.GetComponent<Player_Movements>().hop_timer = 100;
-        //    Vector2 newVelocity = (player2rb.position - player1rb.position).normalized * 100;
-        //    print(newVelocity);
-        //    player2rb.velocity = newVelocity;
-        //}
-        //else { //Player 2 is it
-        //    player1.GetComponent<Player_Movements>().hop_timer = 100;
-        //    Vector2 newVelocity = (player1rb.position - player2rb.position).normalized * 100;
-        //    print(newVelocity);
-        //    player1rb.velocity = newVelocity;
-        //}
+        
     }
 
     private IEnumerator spinPlayer(float anglesPerSecond, GameObject player) {
@@ -91,13 +79,17 @@ public class GameManagerScript : MonoBehaviour
         int rotateLeftOrRight = Random.Range(-1, 1) >= 0 ? 1 : -1;
         Vector3 spinVector = new Vector3(0, 0, anglesPerSecond * delay * rotateLeftOrRight);
 
+        Player_Movements playerMovements = player.GetComponent<Player_Movements>();
+        playerMovements.stop_moving = true;
+
         while (stunTimeLeft > 0) {
             player.transform.Rotate(spinVector);
             stunTimeLeft -= delay;
             yield return new WaitForSeconds(delay);
         }
         player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        
+
+        playerMovements.stop_moving = false;
     }
 	
 	void Update ()
