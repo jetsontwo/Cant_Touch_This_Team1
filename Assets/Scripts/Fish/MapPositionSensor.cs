@@ -4,6 +4,7 @@ using System.Collections;
 public class MapPositionSensor : MonoBehaviour
 {
     public SpriteRenderer sprite;
+    public GameObject shadow;
 
     private MapForFish map;
     private Player_Movements movements;
@@ -74,6 +75,7 @@ public class MapPositionSensor : MonoBehaviour
                 x = newx;
                 y = newy;
             }
+            shadow.transform.position = this.transform.position;
         }
         else
         {
@@ -81,8 +83,16 @@ public class MapPositionSensor : MonoBehaviour
             {
                 movements.falling = false;
             }
+            shadow.transform.position = new Vector3(this.transform.position.x, y + height, 0);
+            float shadowScale = 1.5f - (this.transform.position.y - y - height);
+            if (shadowScale < 0.5f)
+            {
+                shadowScale = 0.5f;
+            }
+            shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
-        sprite.sortingOrder = -(y * 2) + map.GetHeightAt(x, y)*2 + 1;
+        sprite.sortingOrder = (-y + map.GetHeightAt(x, y))*map.sortingSubdivisions + 2;
+        shadow.GetComponent<SpriteRenderer>().sortingOrder = sprite.sortingOrder - 1;
         lastPos = this.transform.position;
     }
 }

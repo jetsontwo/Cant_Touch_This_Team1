@@ -12,6 +12,7 @@ public class MapForFish : MonoBehaviour {
     
     public Sprite[] boardSprites;
     public Sprite wallSprite;
+    public int sortingSubdivisions;
 
     private int[,] heights = new int[,]{{2, 2, 2, 2, 2, 2, 2, 3},
                                         {2, 1, 2, 2, 2, 2, 2, 2},
@@ -21,10 +22,6 @@ public class MapForFish : MonoBehaviour {
                                         {0, 1, 2, 2, 2, 2, 2, 2},
                                         {0, 1, 2, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0}};
-
-    /* 1 = Grass
-     * 0 = Sand
-     */
 
     private int[,] tiles = new int[,]{{0, 0, 0, 0, 0, 0, 0, 1},
                                       {0, 1, 0, 0, 0, 0, 0, 0},
@@ -44,7 +41,7 @@ public class MapForFish : MonoBehaviour {
                 Vector2 position = new Vector2(i, j + heights[i, j]);
                 GameObject tileInstance = new GameObject();
                 tileInstance.AddComponent<SpriteRenderer>().sprite = boardSprites[tiles[i, j]];
-                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(j * 2) + heights[i, j] * 2;
+                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
                 tileInstance.transform.position = position;
                 tileInstance.transform.parent = this.transform;
                 for (int k = 1; k <= heights[i, j]; ++k)
@@ -52,7 +49,7 @@ public class MapForFish : MonoBehaviour {
                     Vector2 wallPosition = new Vector2(position.x, position.y - k);
                     GameObject wallInstance = new GameObject();
                     wallInstance.AddComponent<SpriteRenderer>().sprite = wallSprite;
-                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(j * 2) + heights[i, j] * 2;
+                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
                     wallInstance.transform.position = wallPosition;
                     wallInstance.transform.parent = this.transform;
                 }
