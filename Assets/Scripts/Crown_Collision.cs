@@ -60,4 +60,13 @@ public class Crown_Collision : MonoBehaviour {
             rb.velocity = Vector2.zero;
         }
     }
+
+    public void Put_Crown_On_Player(GameObject winner)
+    {
+        transform.parent = winner.transform;
+        if (winner.name == PLAYER1)
+            player_has_crown = PLAYER1;
+        else
+            player_has_crown = PLAYER2;
+    }
 }
