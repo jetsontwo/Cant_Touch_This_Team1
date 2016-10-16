@@ -1,15 +1,12 @@
 fileFormatVersion: 2
-guid: 9984a749d76e8fc4b94b86b3f440c405
-timeCreated: 1476644653
+guid: fea44665c7bf89c479efd7ead28d2af9
+timeCreated: 1476645607
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Fish Idle Sprite Sheet_0
-    21300002: Fish Idle Sprite Sheet_1
-    21300004: Fish Idle Sprite Sheet_2
-    21300006: Fish Idle Sprite Sheet_3
-    21300008: Fish Idle Sprite Sheet_4
-    21300010: Fish Idle Sprite Sheet_5
+    21300000: fish_idle_left_0
+    21300002: fish_idle_left_1
+    21300004: fish_idle_left_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,7 +32,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 0
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -50,7 +47,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
@@ -59,46 +56,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 50
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 100
-        y: 50
-        width: 50
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_3
+      name: fish_idle_left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,7 +69,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_4
+      name: fish_idle_left_1
       rect:
         serializedVersion: 2
         x: 50
@@ -124,7 +82,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Fish Idle Sprite Sheet_5
+      name: fish_idle_left_2
       rect:
         serializedVersion: 2
         x: 100
