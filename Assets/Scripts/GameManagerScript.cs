@@ -19,8 +19,9 @@ public class GameManagerScript : MonoBehaviour
     public int pushPower;
     public AudioSource audioslap;
     public Crown_Collision cc;
+    public Camera mainCamera;
 
-    private string player_running = "None";
+    private string player_has_crown = "None";
     private float invincibilityTimer;
 
     private int player1_score;
@@ -31,7 +32,11 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator spinCoroutine;
 
-	void Start ()
+    private const string PLAYER1 = "Player_1";
+    private const string PLAYER2 = "Player_2";
+    private const string NONE = "None";
+
+    void Start ()
     {
         invincibilityTimer = 0;
         player1_score = 0;
@@ -49,7 +54,7 @@ public class GameManagerScript : MonoBehaviour
     public void NotifyTouched()
     {
         if (player1rb.IsTouching(player2.GetComponent<Collider2D>())) {
-            if (invincibilityTimer <= 0 && player_running != "None") {
+            if (invincibilityTimer <= 0 && player_has_crown != NONE) {
                 stunPlayer();
                 invincibilityTimer = invincibilityMaxTimer;
             }
@@ -62,12 +67,12 @@ public class GameManagerScript : MonoBehaviour
         GameObject stunnedPlayer = null;
         GameObject otherPlayer = null;
 
-        if (player_running == "Player_1")
+        if (player_has_crown == PLAYER1)
         {
             stunnedPlayer = player1;
             otherPlayer = player2;
         }
-        else if (player_running == "Player_2")
+        else if (player_has_crown == PLAYER2)
         {
             stunnedPlayer = player2;
             otherPlayer = player1;
@@ -113,12 +118,12 @@ public class GameManagerScript : MonoBehaviour
             {
                 invincibilityTimer -= Time.deltaTime;
             }
-            player_running = cc.player_running;
+            player_has_crown = cc.player_has_crown;
 
 
-            if (player_running.Equals("Player_1"))
+            if (player_has_crown.Equals(PLAYER1))
                 ++player1_score;
-            else if(player_running.Equals("Player_2"))
+            else if(player_has_crown.Equals(PLAYER2))
                 ++player2_score;
 
 
