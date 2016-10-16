@@ -9,9 +9,9 @@ public class Player_Movements : MonoBehaviour {
     public Animator am;
     public GameObject sprite_holder_go;
     private SpriteRenderer sprite_holder;
-    public bool water_movement, falling, stop_moving;
+    public bool water_movement, falling,jumping, stop_moving;
     private float hop_timer_buffer;
-    private bool stop_falling;
+    private bool stop_falling, stop_jumping;
     public string last_dir;
     public Sprite[] Idles;
 
@@ -75,13 +75,15 @@ public class Player_Movements : MonoBehaviour {
 
         //print(am.GetBool("moving_up") + " " + am.GetBool("moving_down") + " " + am.GetBool("moving_left") + " " + am.GetBool("moving_right"));
 
-        if (!falling)
+        if (!falling && !jumping)
         {
-            if (stop_falling)
+            if (stop_falling || stop_jumping)
             {
                 rb.velocity = Vector2.zero;
                 stop_falling = false;
+                stop_jumping = false;
             }
+            
             if (water_movement)
             {
                 if (horiz_move != 0  && rb.velocity.magnitude <= max_vel)
@@ -143,10 +145,15 @@ public class Player_Movements : MonoBehaviour {
 
 
         }
-        else
+        else if(falling)
         {
             rb.velocity -= new Vector2(rb.velocity.x / 20, 1);
             stop_falling = true;
+        }
+        else if (jumping)
+        {
+            rb.velocity += new Vector2(rb.velocity.x / 20, 0.5f);
+            stop_jumping = true;
         }
 
 
