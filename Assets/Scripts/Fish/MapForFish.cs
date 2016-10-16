@@ -251,7 +251,15 @@ public class MapForFish : MonoBehaviour {
         }
     }
 
-    public int GetHeightAt(int x, int y)
+    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
+    {
+        x = Mathf.RoundToInt(screenx);
+        y = Mathf.RoundToInt(screeny - height - waterHeight);
+        newheight = heights[x, y];
+        newWaterHeight = waterHeights[x, y];
+    }
+
+public int GetHeightAt(int x, int y)
     {
         return heights[x, y];
     }
