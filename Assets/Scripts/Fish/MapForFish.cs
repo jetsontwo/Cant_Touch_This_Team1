@@ -44,7 +44,7 @@ public class MapForFish : MonoBehaviour {
                 Vector2 position = new Vector2(i, j + heights[i, j]);
                 GameObject tileInstance = new GameObject();
                 tileInstance.AddComponent<SpriteRenderer>().sprite = boardSprites[tiles[i, j]];
-                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y * 2) + heights[i, j] * 2;
+                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(j * 2) + heights[i, j] * 2;
                 tileInstance.transform.position = position;
                 tileInstance.transform.parent = this.transform;
                 for (int k = 1; k <= heights[i, j]; ++k)
@@ -52,7 +52,7 @@ public class MapForFish : MonoBehaviour {
                     Vector2 wallPosition = new Vector2(position.x, position.y - k);
                     GameObject wallInstance = new GameObject();
                     wallInstance.AddComponent<SpriteRenderer>().sprite = wallSprite;
-                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(position.y * 2) + k * 2;
+                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = -(int)(j * 2) + heights[i, j] * 2;
                     wallInstance.transform.position = wallPosition;
                     wallInstance.transform.parent = this.transform;
                 }

@@ -277,6 +277,7 @@ MonoBehaviour:
   hop_timer: 30
   hop_decrease: 1
   hop_speed: 30
+  threshold: 0
   left_move: left
   right_move: right
   up_move: up

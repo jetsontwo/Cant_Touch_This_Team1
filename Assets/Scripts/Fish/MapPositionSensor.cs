@@ -7,6 +7,7 @@ public class MapPositionSensor : MonoBehaviour
 
     private MapForFish map;
     private Player_Movements movements;
+    private Vector3 lastPos;
     public int x;
     public int y;
     public int height;
@@ -17,6 +18,7 @@ public class MapPositionSensor : MonoBehaviour
         map = FindObjectOfType<MapForFish>();
         map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), out x, out y, out height);
         movements = GetComponent<Player_Movements>();
+        lastPos = this.transform.position;
     }
 
     // Update is called once per frame
@@ -42,38 +44,45 @@ public class MapPositionSensor : MonoBehaviour
         {
             this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + height - 1, 0);
         }
-        if (movements.falling && this.transform.position.y <= (y + height))
-        {
-            movements.falling = false;
-        }
 
         // Get tile information from the map
-        map.GetTile(this.transform.position.x, this.transform.position.y, height, out newx, out newy, out newheight);
-        
-        if (newheight < height)
+        if (!movements.falling)
         {
-            movements.falling = true;
-            x = newx;
-            y = newy;
-            height = newheight;
-        }
-        else if (newheight > height)
-        {
-            if (newy != y)
+            map.GetTile(this.transform.position.x, this.transform.position.y, height, out newx, out newy, out newheight);
+            if (newheight < height)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+                movements.falling = true;
+                x = newx;
+                y = newy;
+                height = newheight;
             }
-            if (newx != x)
+            else if (!movements.falling && newheight > height)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                if (newy != y)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+                    this.transform.position = new Vector3(this.transform.position.x, lastPos.y, 0);
+                }
+                if (newx != x)
+                {
+                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                    this.transform.position = new Vector3(lastPos.x, this.transform.position.y, 0);
+                }
             }
-            this.transform.position = new Vector3(x, y + height, 0);
+            else
+            {
+                x = newx;
+                y = newy;
+            }
         }
         else
         {
-            x = newx;
-            y = newy;
+            if (this.transform.position.y <= (y + height))
+            {
+                movements.falling = false;
+            }
         }
-        sprite.sortingOrder = -(map.GetHeightAt(x, y) * 2) + 1;
+        sprite.sortingOrder = -(y * 2) + map.GetHeightAt(x, y)*2 + 1;
+        lastPos = this.transform.position;
     }
 }

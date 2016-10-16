@@ -41,7 +41,7 @@ public class Camera_Behavior : MonoBehaviour {
         float difference = adjustmentRatioY * distanceBetweenPlayers - playersBoundingY * distanceBetweenPlayers;
 
         float linearTransitionForCamera = distanceBetweenPlayers * playersBoundingY + difference * (1 - (distanceBetweenPlayers) / sizeYLimit);
-        print(linearTransitionForCamera);
+        //print(linearTransitionForCamera);
         //print(distanceBetweenPlayers * playersBounding + " | " + difference * (distanceBetweenPlayers / 50) + " | " + linearTransitionForCamera + " | " + distanceBetweenPlayers * playersBounding);
         //        mainCamera.orthographicSize = Mathf.Clamp(Mathf.Pow(distanceBetweenPlayers * adjustmentRatio, 1/1.1f), minCameraSize, distanceBetweenPlayers * playersBounding );
         mainCamera.orthographicSize = Mathf.Clamp(linearTransitionForCamera, minCameraSize, Mathf.Max(sizeYLimit, minCameraSize));
