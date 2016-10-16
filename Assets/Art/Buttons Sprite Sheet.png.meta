@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: e7d862f52cc54004c889694af2ac3b0d
-timeCreated: 1476649152
+timeCreated: 1476654577
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -68,10 +68,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 75
-        width: 50
-        height: 25
+        x: 3
+        y: 82
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -81,10 +81,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 75
-        width: 50
-        height: 25
+        x: 53
+        y: 82
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -94,10 +94,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_2
       rect:
         serializedVersion: 2
-        x: 100
-        y: 75
-        width: 50
-        height: 25
+        x: 103
+        y: 82
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -107,10 +107,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 50
-        width: 50
-        height: 25
+        x: 3
+        y: 57
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -120,10 +120,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_4
       rect:
         serializedVersion: 2
-        x: 50
-        y: 50
-        width: 50
-        height: 25
+        x: 53
+        y: 57
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,10 +133,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_5
       rect:
         serializedVersion: 2
-        x: 100
-        y: 50
-        width: 50
-        height: 25
+        x: 104
+        y: 57
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +146,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 25
-        width: 50
-        height: 25
+        x: 3
+        y: 32
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,10 +159,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_7
       rect:
         serializedVersion: 2
-        x: 50
-        y: 25
-        width: 50
-        height: 25
+        x: 53
+        y: 32
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +172,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_8
       rect:
         serializedVersion: 2
-        x: 100
-        y: 25
-        width: 50
-        height: 25
+        x: 104
+        y: 32
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,10 +185,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_9
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 50
-        height: 25
+        x: 3
+        y: 7
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -198,10 +198,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_10
       rect:
         serializedVersion: 2
-        x: 50
-        y: 0
-        width: 50
-        height: 25
+        x: 53
+        y: 7
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,10 +211,10 @@ TextureImporter:
       name: Buttons Sprite Sheet_11
       rect:
         serializedVersion: 2
-        x: 100
-        y: 0
-        width: 50
-        height: 25
+        x: 103
+        y: 7
+        width: 43
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

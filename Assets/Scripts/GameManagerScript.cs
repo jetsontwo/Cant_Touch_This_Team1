@@ -49,7 +49,7 @@ public class GameManagerScript : MonoBehaviour
         playAgain.gameObject.SetActive(false);
         gameTimer.timeLeft = gameMaxTimer;
 
-        stunDuration = 1f;
+        stunDuration = 1.1f;
         camBehavior = mainCamera.GetComponent<Camera_Behavior>();
     }
     
@@ -81,18 +81,20 @@ public class GameManagerScript : MonoBehaviour
 
     private IEnumerator spinPlayer(GameObject player, float stunTime, float anglesPerSecond) {
         audioslap.Play();
-        cc.Knocked_Off();
-        float delay = 0.05f;
+        if (player_has_crown == player.name) {
+            cc.Knocked_Off();
+        }
+        //float delay = 0.01f;
         int rotateLeftOrRight = Random.Range(-1, 1) >= 0 ? 1 : -1;
-        Vector3 spinVector = new Vector3(0, 0, anglesPerSecond * delay * rotateLeftOrRight);
+        Vector3 spinVector = new Vector3(0, 0, anglesPerSecond * Time.deltaTime * rotateLeftOrRight);
 
         Player_Movements playerMovements = player.GetComponent<Player_Movements>();
         playerMovements.stop_moving = true;
 
         while (stunTime > 0) {
             player.transform.Rotate(spinVector);
-            stunTime -= delay;
-            yield return new WaitForSeconds(delay);
+            stunTime -= Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
         player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
 
