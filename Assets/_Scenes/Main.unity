@@ -272,7 +272,7 @@ GameObject:
   - 4: {fileID: 356917112}
   - 212: {fileID: 356917113}
   m_Layer: 0
-  m_Name: Shadow
+  m_Name: Shadow_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,13 +284,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 356917111}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 1506029525}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
 --- !u!212 &356917113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -334,7 +334,7 @@ GameObject:
   - 4: {fileID: 400404381}
   - 212: {fileID: 400404382}
   m_Layer: 0
-  m_Name: Shadow
+  m_Name: Shadow_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,12 +347,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 400404380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 967919595}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!212 &400404382
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   pushPower: 100
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 1360458978}
 --- !u!4 &493764626
 Transform:
   m_ObjectHideFlags: 0
@@ -743,7 +743,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2060802503}
-  - {fileID: 400404381}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!114 &967919596
@@ -1746,7 +1745,6 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1120617576}
-  - {fileID: 356917112}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!114 &1506029526
