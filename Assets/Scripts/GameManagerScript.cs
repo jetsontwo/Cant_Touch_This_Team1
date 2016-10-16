@@ -94,6 +94,7 @@ public class GameManagerScript : MonoBehaviour
 	
 	void Update ()
     {
+        print(player1_is_it);
         if ((int)gameTimer.timeLeft > 0)
         {
             NotifyTouched();

@@ -299,6 +299,7 @@ MonoBehaviour:
   playAgain: {fileID: 1304067071}
   player1: {fileID: 1506029523}
   player2: {fileID: 967919593}
+  pushPower: 100
 --- !u!4 &493764626
 Transform:
   m_ObjectHideFlags: 0
