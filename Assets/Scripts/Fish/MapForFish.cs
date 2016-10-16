@@ -26,6 +26,7 @@ public class MapForFish : MonoBehaviour {
     private GameObject[,] waterTiles = new GameObject[8, 8];
     private int[,] waterTileSprites = new int[8, 8];
     private bool switchFirsts = true;
+    private float max_height = 2;
 
     private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
@@ -56,6 +57,8 @@ public class MapForFish : MonoBehaviour {
                 tileInstance.AddComponent<SpriteRenderer>().sprite = boardSprites[tiles[i, j]];
                 tileInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
                 tileInstance.GetComponent<SpriteRenderer>().material = spriteMat;
+                float shade = 0.8f + 0.2f * heights[i, j] / max_height;
+                tileInstance.GetComponent<SpriteRenderer>().color = new Color(shade, shade, shade);
                 tileInstance.transform.position = position;
                 tileInstance.transform.parent = this.transform;
                 tileInstance.name = "tile: " + i + ", " + j;
@@ -78,6 +81,8 @@ public class MapForFish : MonoBehaviour {
                     }
                     wallInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
                     wallInstance.GetComponent<SpriteRenderer>().material = spriteMat;
+                    shade = 0.8f + 0.2f * k / max_height;
+                    tileInstance.GetComponent<SpriteRenderer>().color = new Color(shade, shade, shade);
                     wallInstance.transform.position = wallPosition;
                     wallInstance.transform.parent = this.transform;
                     wallInstance.name = "wall: " + i + ", " + (j + k);
@@ -251,16 +256,12 @@ public class MapForFish : MonoBehaviour {
         }
     }
 
-    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
+    public int GetHeightAt(int x, int y)
     {
-        x = Mathf.RoundToInt(screenx);
-        y = Mathf.RoundToInt(screeny - height - waterHeight);
-        newheight = heights[x, y];
-        newWaterHeight = waterHeights[x, y];
-    }
-
-public int GetHeightAt(int x, int y)
-    {
+        if (x < 0 || x > tiles.GetLength(0) || y < 0 || y > tiles.GetLength(1))
+        {
+            Debug.Log("Trying to access: " + x + ", " + y);
+        }
         return heights[x, y];
     }
 
