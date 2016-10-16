@@ -30,7 +30,7 @@ public class Crown_Collision : MonoBehaviour {
         bc.enabled = true;
         player_has_crown = NONE;
 
-        rb.velocity = new Vector2(Random.Range(-50f, 50f), Random.Range(-50f, 50f));
+        rb.velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f));
     }
 
 
@@ -50,9 +50,14 @@ public class Crown_Collision : MonoBehaviour {
 
     void Update()
     {
+        print(rb.velocity);
         cooldown -= Time.deltaTime;
-        if(player_has_crown != NONE)
+        if (player_has_crown != NONE)
             transform.localPosition = new Vector3(0, .75f, 0);
-        rb.velocity = new Vector2(rb.velocity.x / 10, rb.velocity.y / 10);
+        rb.velocity -= new Vector2(rb.velocity.x, rb.velocity.y) * Time.deltaTime;
+        if(rb.velocity.magnitude < 0.5)
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 }
