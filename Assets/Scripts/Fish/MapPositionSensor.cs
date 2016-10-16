@@ -6,6 +6,7 @@ public class MapPositionSensor : MonoBehaviour
     public SpriteRenderer sprite;
 
     private MapForFish map;
+    private Player_Movements movements;
     public int x;
     public int y;
     public int height;
@@ -15,6 +16,7 @@ public class MapPositionSensor : MonoBehaviour
     {
         map = FindObjectOfType<MapForFish>();
         map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), out x, out y, out height);
+        movements = GetComponent<Player_Movements>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,8 @@ public class MapPositionSensor : MonoBehaviour
     void Update()
     {
         int newheight, newx, newy;
+        
+        // Prevent movement out of bounds
         if (this.transform.position.x < 0)
         {
             this.transform.position = new Vector3(0, this.transform.position.y, 0);
@@ -38,15 +42,17 @@ public class MapPositionSensor : MonoBehaviour
         {
             this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + height - 1, 0);
         }
-        map.GetTile(this.transform.position.x, this.transform.position.y, height, out newx, out newy, out newheight);
-        if (newheight == height)
+        if (movements.falling && this.transform.position.y <= (y + height))
         {
-            x = newx;
-            y = newy;
+            movements.falling = false;
         }
+
+        // Get tile information from the map
+        map.GetTile(this.transform.position.x, this.transform.position.y, height, out newx, out newy, out newheight);
+        
         if (newheight < height)
         {
-            this.transform.position = new Vector3(newx, newy + newheight, 0);
+            movements.falling = true;
             x = newx;
             y = newy;
             height = newheight;
@@ -63,5 +69,11 @@ public class MapPositionSensor : MonoBehaviour
             }
             this.transform.position = new Vector3(x, y + height, 0);
         }
+        else
+        {
+            x = newx;
+            y = newy;
+        }
+        sprite.sortingOrder = -(map.GetHeightAt(x, y) * 2) + 1;
     }
 }

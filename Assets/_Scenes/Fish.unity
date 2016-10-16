@@ -239,7 +239,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1266170893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 3, z: 0}
+  m_LocalPosition: {x: 4, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -282,7 +282,8 @@ MonoBehaviour:
   up_move: up
   down_move: down
   am: {fileID: 159604803}
-  water_movement: 1
+  water_movement: 0
+  falling: 0
 --- !u!50 &1266170897
 Rigidbody2D:
   serializedVersion: 2
