@@ -592,7 +592,7 @@ MonoBehaviour:
   down_move: down
   am: {fileID: 2060802501}
   sprite_holder_go: {fileID: 2060802500}
-  water_movement: 0
+  water_movement: 1
   falling: 0
   stop_moving: 0
   last_dir: left
@@ -1513,6 +1513,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!1 &1915700378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1915700380}
+  - 114: {fileID: 1915700379}
+  m_Layer: 0
+  m_Name: Map
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1915700379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1915700378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d17ea97f75ab1429d2119629ffe47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardSprites: []
+  wallSprite: {fileID: 21300004, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
+  sortingSubdivisions: 0
+--- !u!4 &1915700380
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1915700378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.7286882, y: 0.15376063, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
 --- !u!1 &2060802500
 GameObject:
   m_ObjectHideFlags: 0
