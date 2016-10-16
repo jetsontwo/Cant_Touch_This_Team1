@@ -36,6 +36,7 @@ public class Camera_Behavior : MonoBehaviour {
         changeCameraSize();
 
         if (shakeCam) {
+            cameraShakeCoroutine = shakeCamera(.15f, .1f);
             StartCoroutine(cameraShakeCoroutine);
         }
         
