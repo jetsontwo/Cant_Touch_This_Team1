@@ -57,55 +57,36 @@ public class GameManagerScript : MonoBehaviour
     {
         if (player1rb.IsTouching(player2.GetComponent<Collider2D>())) {
             if (invincibilityTimer <= 0 && player_has_crown != NONE) {
-                stunPlayer();
                 invincibilityTimer = invincibilityMaxTimer;
             }
         }
 
     }
 
-    public void stunPlayer() {
         //Stun the player who is not it
-        GameObject stunnedPlayer = null;
-        GameObject otherPlayer = null;
-
-        if (player_has_crown == PLAYER1)
-        {
-            stunnedPlayer = player1;
-            otherPlayer = player2;
-        }
-        else if (player_has_crown == PLAYER2)
-        {
-            stunnedPlayer = player2;
-            otherPlayer = player1;
-        }
-        else
-            return;
+        GameObject otherPlayer = stunnedPlayer == player1 ? player2 : player1;
 
         camBehavior.shakeCam = true;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
-        spinCoroutine = spinPlayer(1600, stunnedPlayer);
         StartCoroutine(spinCoroutine);
         
     }
 
-    private IEnumerator spinPlayer(float anglesPerSecond, GameObject player) {
         audioslap.Play();
         cc.Knocked_Off();
         float delay = 0.05f;
-        float stunTimeLeft = stunDuration;
         int rotateLeftOrRight = Random.Range(-1, 1) >= 0 ? 1 : -1;
         Vector3 spinVector = new Vector3(0, 0, anglesPerSecond * delay * rotateLeftOrRight);
 
         Player_Movements playerMovements = player.GetComponent<Player_Movements>();
         playerMovements.stop_moving = true;
 
-        while (stunTimeLeft > 0) {
+        while (stunTime > 0) {
             player.transform.Rotate(spinVector);
-            stunTimeLeft -= delay;
+            stunTime -= delay;
             yield return new WaitForSeconds(delay);
         }
         player.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
