@@ -7,7 +7,8 @@ public class Player_Movements : MonoBehaviour {
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
     public Animator am;
-    public SpriteRenderer sprite_holder;
+    public GameObject sprite_holder_go;
+    private SpriteRenderer sprite_holder;
     public bool water_movement, falling, stop_moving;
     private float hop_timer_buffer;
     private bool stop_falling;
@@ -18,6 +19,7 @@ public class Player_Movements : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         hop_timer_buffer = hop_timer;
+        sprite_holder = sprite_holder_go.GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -58,18 +60,21 @@ public class Player_Movements : MonoBehaviour {
                 last_dir = "down";
             }
         }
-        
+
 
         if(rb.velocity.x > -threshold && rb.velocity.x < threshold)
         {
             am.SetBool("moving_right", false);
             am.SetBool("moving_left", false);
+            print("heyo");
         }
         if(rb.velocity.y > -threshold && rb.velocity.y < threshold)
         {
             am.SetBool("moving_up", false);
             am.SetBool("moving_down", false);
         }
+
+        //print(am.GetBool("moving_up") + " " + am.GetBool("moving_down") + " " + am.GetBool("moving_left") + " " + am.GetBool("moving_right"));
 
         if (!falling)
         {
@@ -150,50 +155,12 @@ public class Player_Movements : MonoBehaviour {
         if(!(am.GetBool("moving_up") || am.GetBool("moving_down") || am.GetBool("moving_left") || am.GetBool("moving_right")))
         {
             Get_Idle();
+            sprite_holder_go.transform.position = gameObject.transform.position + new Vector3(0, 0.1f, 0);
         }
         else
         {
             am.enabled = true;
         }
-        
-        
-
-
-        //if (rb.velocity.x != 0 || rb.velocity.y != 0)
-        //{
-
-        //        if(rb.velocity.x > 0)
-        //        {
-        //            am.SetBool("moving_right", true);
-        //            am.SetBool("moving_left", false);
-        //        }
-        //        else if(rb.velocity.x < 0)
-        //        {
-        //            am.SetBool("moving_left", true);
-        //            am.SetBool("moving_right", false);
-        //        }
-
-
-
-        //        if (rb.velocity.y > 0)
-        //        {
-        //            am.SetBool("moving_up", true);
-        //            am.SetBool("moving_down", false);
-        //        }
-        //        else if (rb.velocity.y < 0)
-        //        {
-        //            am.SetBool("moving_down", true);
-        //            am.SetBool("moving_up", false);
-        //        }
-
-        //}
-        //else
-        //{
-        //    am.SetBool("moving_left", false);
-        //    am.SetBool("moving_right", false);
-        //    am.SetBool("moving_up", false);
-        //    am.SetBool("moving_down", false);
-        //}
     }
 
 
