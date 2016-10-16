@@ -5,7 +5,6 @@ public class MapPositionSensor : MonoBehaviour
 {
     public SpriteRenderer sprite;
     public GameObject shadow;
-
     public MapForFish map;
     public Player_Movements movements;
     private Vector3 lastPos;

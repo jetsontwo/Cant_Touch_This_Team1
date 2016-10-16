@@ -162,7 +162,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &17999437
 RectTransform:
@@ -427,7 +427,7 @@ MonoBehaviour:
   pushPower: 100
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
-  mainCamera: {fileID: 1360458978}
+  mainCamera: {fileID: 0}
 --- !u!4 &493764626
 Transform:
   m_ObjectHideFlags: 0
@@ -738,7 +738,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967919593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.82, y: 3, z: 0}
+  m_LocalPosition: {x: 7, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -757,22 +757,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.3
+  acceleration: 15
+  deceleration: 20
   max_vel: 7.5
   hop_timer: 30
   hop_decrease: 1
-  hop_speed: 30
+  hop_speed: 2.5
   threshold: 0.45
   left_move: left
   right_move: right
   up_move: up
   down_move: down
   am: {fileID: 2060802501}
-  sprite_holder_go: {fileID: 2060802500}
-  water_movement: 1
-  falling: 0
-  jumping: 0
-  stop_moving: 0
   last_dir: left
   Idles:
   - {fileID: 21300004, guid: e921b627c588cda4786739022d357504, type: 3}
@@ -783,6 +779,13 @@ MonoBehaviour:
   - {fileID: 21300010, guid: c666bb66e8ec9dc4bb9fb3a035e64637, type: 3}
   - {fileID: 21300012, guid: 3be0fe8459472784ba828bdf433d6e10, type: 3}
   - {fileID: 21300000, guid: c4b01227c37c8cd4bb671d904204b056, type: 3}
+  water_movement: 1
+  falling: 0
+  jumping: 0
+  stop_moving: 0
+  vel: {x: 0, y: 0, z: 0}
+  accel: {x: 0, y: 0, z: 0}
+  sprite_holder_go: {fileID: 2060802500}
 --- !u!50 &967919597
 Rigidbody2D:
   serializedVersion: 2
@@ -1062,7 +1065,7 @@ MonoBehaviour:
   waterSprite: {fileID: 21300000, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
   sortingSubdivisions: 3
-  waterVolume: 20
+  waterVolume: 35
   initialWaterArea:
   - {x: 0, y: 0}
 --- !u!1 &1251535994
@@ -1757,22 +1760,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.3
+  acceleration: 15
+  deceleration: 20
   max_vel: 7.5
   hop_timer: 30
   hop_decrease: 1
-  hop_speed: 30
+  hop_speed: 2.5
   threshold: 0.45
   left_move: a
   right_move: d
   up_move: w
   down_move: s
   am: {fileID: 1120617577}
-  sprite_holder_go: {fileID: 1120617575}
-  water_movement: 1
-  falling: 0
-  jumping: 0
-  stop_moving: 0
   last_dir: 
   Idles:
   - {fileID: 21300004, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
@@ -1783,6 +1782,13 @@ MonoBehaviour:
   - {fileID: 21300010, guid: b144ff5f10cd6b544958ad3f2c0a9c05, type: 3}
   - {fileID: 21300012, guid: 56c72ff51da8e3343aabf838e4dab8a4, type: 3}
   - {fileID: 21300000, guid: b540bd941ec355a49a4261ea0e99f161, type: 3}
+  water_movement: 1
+  falling: 0
+  jumping: 0
+  stop_moving: 0
+  vel: {x: 0, y: 0, z: 0}
+  accel: {x: 0, y: 0, z: 0}
+  sprite_holder_go: {fileID: 1120617575}
 --- !u!50 &1506029527
 Rigidbody2D:
   serializedVersion: 2

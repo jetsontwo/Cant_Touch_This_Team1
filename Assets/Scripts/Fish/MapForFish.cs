@@ -24,10 +24,10 @@ public class MapForFish : MonoBehaviour {
 
     private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 2, 2, 2, 2, 0, 0},
-                                        {0, 0, 2, 2, 2, 2, 0, 0},
-                                        {0, 0, 2, 2, 2, 2, 0, 0},
-                                        {0, 0, 2, 2, 2, 2, 0, 0},
+                                        {0, 0, 1, 1, 1, 1, 0, 0},
+                                        {0, 0, 1, 2, 2, 1, 0, 0},
+                                        {0, 0, 1, 2, 2, 1, 0, 0},
+                                        {0, 0, 1, 1, 1, 1, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0}};
 
@@ -78,6 +78,7 @@ public class MapForFish : MonoBehaviour {
                 waterInstance.GetComponent<SpriteRenderer>().material = spriteMat;
                 waterTiles[i, j] = waterInstance;
                 waterInstance.name = "water: " + i + ", " + j;
+                waterInstance.transform.parent = this.transform;
             }
         }
         for (int i = 0; i < initialWaterArea.Length; ++i)
