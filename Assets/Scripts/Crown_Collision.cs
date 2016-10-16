@@ -13,12 +13,13 @@ public class Crown_Collision : MonoBehaviour {
     {
         bc = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        cooldown = 2;
+        cooldown = 0.5f;
 
     }
 
     public void Knocked_Off()
     {
+        transform.position = transform.parent.position;
         transform.parent = crown_holder.transform;
         transform.rotation = crown_holder.transform.rotation;
         cooldown = .5f;
