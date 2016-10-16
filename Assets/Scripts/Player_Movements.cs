@@ -7,18 +7,22 @@ public class Player_Movements : MonoBehaviour {
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
     public Animator am;
+    private SpriteRenderer sprite_holder;
     public bool water_movement, falling;
     private float hop_timer_buffer;
     private bool stop_falling;
+    public Sprite[] Idles;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         hop_timer_buffer = hop_timer;
+        sprite_holder = GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        am.SetBool("in_water", water_movement);
         int horiz_move = 0;
         int vert_move = 0;
 
@@ -56,6 +60,14 @@ public class Player_Movements : MonoBehaviour {
                 else
                 {
                     rb.velocity -= new Vector2(rb.velocity.x / 10, rb.velocity.y / 10);
+                    if (rb.velocity.x > -threshold && rb.velocity.x < threshold)
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
+                    if (rb.velocity.y > -threshold && rb.velocity.y < threshold)
+                    {
+                        rb.velocity = new Vector2(rb.velocity.x, 0);
+                    }
                 }
             }
             else
@@ -73,17 +85,19 @@ public class Player_Movements : MonoBehaviour {
                 {
                     hop_timer -= hop_decrease;
                 }
+                
+                //Threshold stopping velocity once it gets low enough
+                if (rb.velocity.x > -threshold && rb.velocity.x < threshold)
+                {
+                    rb.velocity = new Vector2(0, rb.velocity.y);
+                }
+                if (rb.velocity.y > -threshold && rb.velocity.y < threshold)
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, 0);
+                }
             }
 
-            //Threshold stopping velocity once it gets low enough
-            if(rb.velocity.x > -threshold && rb.velocity.x < threshold)
-            {
-                rb.velocity = new Vector2(0, rb.velocity.y);
-            }
-            if(rb.velocity.y > - threshold && rb.velocity.y < threshold)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, 0);
-            }
+
         }
         else
         {
@@ -95,29 +109,33 @@ public class Player_Movements : MonoBehaviour {
 
         if (rb.velocity.x != 0 || rb.velocity.y != 0)
         {
-            if(rb.velocity.x > 0)
+            if(rb.velocity.x > -threshold && rb.velocity.x < threshold)
             {
-                am.SetBool("moving_right", true);
-                am.SetBool("moving_left", false);
-            }
-            else if (rb.velocity.x < 0)
-            {
-                am.SetBool("moving_left", true);
-                am.SetBool("moving_right", false);
-            }
-
-
-            if(rb.velocity.y > 0)
-            {
-                am.SetBool("moving_up", true);
-                am.SetBool("moving_down", false);
-            }
-            else if(rb.velocity.y < 0)
-            {
-                am.SetBool("moving_down", true);
-                am.SetBool("moving_up", false);
+                if(rb.velocity.x > 0)
+                {
+                    am.SetBool("moving_right", true);
+                    am.SetBool("moving_left", false);
+                }
+                else if(rb.velocity.x < 0)
+                {
+                    am.SetBool("moving_left", true);
+                    am.SetBool("moving_right", false);
+                }
             }
 
+            if(rb.velocity.y > -threshold && rb.velocity.y < threshold)
+            {
+                if (rb.velocity.y > 0)
+                {
+                    am.SetBool("moving_up", true);
+                    am.SetBool("moving_down", false);
+                }
+                else if (rb.velocity.y < 0)
+                {
+                    am.SetBool("moving_down", true);
+                    am.SetBool("moving_up", false);
+                }
+            }
         }
         else
         {

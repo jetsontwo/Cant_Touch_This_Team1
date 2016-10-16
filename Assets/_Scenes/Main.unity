@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e2d795bbd39040943f5150e54cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaxTimer: 15
+  gameMaxTimer: 60
   invincibilityMaxTimer: 5
   gameTimer: {fileID: 1131328557}
   score_1: {fileID: 806095249}
@@ -471,9 +471,11 @@ GameObject:
   - 212: {fileID: 967919594}
   - 114: {fileID: 967919596}
   - 50: {fileID: 967919597}
+  - 95: {fileID: 967919598}
+  - 61: {fileID: 967919599}
   m_Layer: 0
-  m_Name: $CorgSprites_3
-  m_TagString: Untagged
+  m_Name: Player_2
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -507,7 +509,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300006, guid: 4817e8d64587d6145ba376bb68dd51b4, type: 3}
+  m_Sprite: {fileID: 21300014, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -518,8 +520,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967919593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.3810234, y: -0.55239, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: 4.11, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -537,14 +539,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 0.3
   max_vel: 7.5
-  hop_timer: 0
-  hop_decrease: 0
-  hop_speed: 0
+  hop_timer: 30
+  hop_decrease: 1
+  hop_speed: 30
+  threshold: 0.45
   left_move: left
   right_move: right
   up_move: up
   down_move: down
-  am: {fileID: 1506029528}
+  am: {fileID: 967919598}
   water_movement: 0
   falling: 0
 --- !u!50 &967919597
@@ -564,6 +567,37 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &967919598
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967919593}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3bac05e799857d2468d71f61fac3beba, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!61 &967919599
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 967919593}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 0.75}
 --- !u!1 &1131328556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,9 +1172,10 @@ GameObject:
   - 114: {fileID: 1506029526}
   - 50: {fileID: 1506029527}
   - 95: {fileID: 1506029528}
+  - 61: {fileID: 1506029529}
   m_Layer: 0
-  m_Name: $CorgSprites_1
-  m_TagString: Untagged
+  m_Name: Player_1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1174,7 +1209,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300002, guid: 4817e8d64587d6145ba376bb68dd51b4, type: 3}
+  m_Sprite: {fileID: 21300004, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1185,8 +1220,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506029523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2952592, y: 0.17143117, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1204,15 +1239,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 0.3
   max_vel: 7.5
-  hop_timer: 0
-  hop_decrease: 0
-  hop_speed: 0
+  hop_timer: 30
+  hop_decrease: 1
+  hop_speed: 30
+  threshold: 0.45
   left_move: a
   right_move: d
   up_move: w
   down_move: s
   am: {fileID: 1506029528}
-  water_movement: 0
+  water_movement: 1
   falling: 0
 --- !u!50 &1506029527
 Rigidbody2D:
@@ -1248,6 +1284,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!61 &1506029529
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506029523}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.75, y: 0.75}
 --- !u!1 &1648578782
 GameObject:
   m_ObjectHideFlags: 0
