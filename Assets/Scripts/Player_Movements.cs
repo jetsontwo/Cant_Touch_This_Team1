@@ -113,10 +113,14 @@ public class Player_Movements : MonoBehaviour {
             }
             else
             {
-                if (!stop_moving)
-                {
-                    accel = vel.normalized * -deceleration;
-                }
+                //if (!stop_moving)
+                //{
+                accel = vel.normalized * -deceleration;
+                //}
+                //else {
+                //    accel = vel.normalized * -deceleration;
+                //}
+
             }
         }
 
