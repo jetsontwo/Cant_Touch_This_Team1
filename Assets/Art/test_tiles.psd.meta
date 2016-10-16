@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 4f2a60a9519218e47b72d6381ef17244
-timeCreated: 1476561679
+timeCreated: 1476584385
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: grass
     21300002: sand
     21300004: wall
+    21300006: water
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -86,6 +87,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: water
+      rect:
+        serializedVersion: 2
+        x: 96
         y: 0
         width: 32
         height: 32

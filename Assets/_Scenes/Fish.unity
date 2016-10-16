@@ -263,7 +263,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
   - {fileID: 21300002, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
   wallSprite: {fileID: 21300004, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
-  sortingSubdivisions: 3
+  waterSprite: {fileID: 21300006, guid: 4f2a60a9519218e47b72d6381ef17244, type: 3}
+  spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
+  sortingSubdivisions: 4
+  waterVolume: 5
+  initialWaterArea:
+  - {x: 7, y: 0}
 --- !u!4 &1264318577
 Transform:
   m_ObjectHideFlags: 0
@@ -302,7 +307,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1266170893}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: 4, z: 0}
+  m_LocalPosition: {x: 5, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -326,6 +331,8 @@ MonoBehaviour:
   x: 0
   y: 0
   height: 0
+  waterheight: 0
+  minWaterHeight: 0.2
 --- !u!114 &1266170896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,8 +355,12 @@ MonoBehaviour:
   up_move: up
   down_move: down
   am: {fileID: 159604803}
+  sprite_holder_go: {fileID: 159604802}
   water_movement: 0
   falling: 0
+  stop_moving: 0
+  last_dir: 
+  Idles: []
 --- !u!50 &1266170897
 Rigidbody2D:
   serializedVersion: 2
