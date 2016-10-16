@@ -24,6 +24,11 @@ public class Button_Commands : MonoBehaviour {
         SceneManager.LoadScene("Main Menu");
     }
 
+    public void credit()
+    {
+        SceneManager.LoadScene("Credit");
+    }
+
     public void quit()
     {
         Application.Quit();
