@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Player_Movements : MonoBehaviour {
 
-    public float acceleration, max_vel, hop_timer, hop_decrease, hop_speed;
+    public float acceleration, max_vel, hop_timer, hop_decrease, hop_speed, threshold;
     private Rigidbody2D rb;
     public string left_move, right_move, up_move, down_move;
     public Animator am;
@@ -43,7 +43,10 @@ public class Player_Movements : MonoBehaviour {
         if (!falling)
         {
             if (stop_falling)
+            {
                 rb.velocity = Vector2.zero;
+                stop_falling = false;
+            }
             if (water_movement)
             {
                 if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel)
@@ -59,7 +62,6 @@ public class Player_Movements : MonoBehaviour {
             {
                 if ((horiz_move != 0 || vert_move != 0) && rb.velocity.magnitude <= max_vel && hop_timer <= 0)
                 {
-                    print("hi");
                     rb.velocity += new Vector2(horiz_move * acceleration * hop_speed, vert_move * acceleration * hop_speed);
                     hop_timer = hop_timer_buffer;
                 }
@@ -67,7 +69,20 @@ public class Player_Movements : MonoBehaviour {
                 {
                     rb.velocity -= new Vector2(rb.velocity.x / 10, rb.velocity.y / 10);
                 }
-                hop_timer -= hop_decrease;
+                if(hop_timer > -10)
+                {
+                    hop_timer -= hop_decrease;
+                }
+            }
+
+            //Threshold stopping velocity once it gets low enough
+            if(rb.velocity.x > -threshold && rb.velocity.x < threshold)
+            {
+                rb.velocity = new Vector2(0, rb.velocity.y);
+            }
+            if(rb.velocity.y > - threshold && rb.velocity.y < threshold)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
             }
         }
         else
@@ -78,26 +93,26 @@ public class Player_Movements : MonoBehaviour {
         
 
 
-        if (horiz_move != 0 || vert_move != 0)
+        if (rb.velocity.x != 0 || rb.velocity.y != 0)
         {
-            if(horiz_move > 0)
+            if(rb.velocity.x > 0)
             {
                 am.SetBool("moving_right", true);
                 am.SetBool("moving_left", false);
             }
-            else if (horiz_move < 0)
+            else if (rb.velocity.x < 0)
             {
                 am.SetBool("moving_left", true);
                 am.SetBool("moving_right", false);
             }
 
 
-            if(vert_move > 0)
+            if(rb.velocity.y > 0)
             {
                 am.SetBool("moving_up", true);
                 am.SetBool("moving_down", false);
             }
-            else if(vert_move < 0)
+            else if(rb.velocity.y < 0)
             {
                 am.SetBool("moving_down", true);
                 am.SetBool("moving_up", false);
