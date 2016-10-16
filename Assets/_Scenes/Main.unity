@@ -162,7 +162,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &17999437
 RectTransform:
@@ -770,6 +770,7 @@ MonoBehaviour:
   sprite_holder_go: {fileID: 2060802500}
   water_movement: 1
   falling: 0
+  jumping: 0
   stop_moving: 0
   last_dir: left
   Idles:
@@ -1768,6 +1769,7 @@ MonoBehaviour:
   sprite_holder_go: {fileID: 1120617575}
   water_movement: 1
   falling: 0
+  jumping: 0
   stop_moving: 0
   last_dir: 
   Idles:
