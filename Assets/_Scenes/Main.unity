@@ -424,7 +424,7 @@ MonoBehaviour:
   playAgain: {fileID: 1304067071}
   player1: {fileID: 1506029523}
   player2: {fileID: 967919593}
-  pushPower: 100
+  pushPower: 13
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
   mainCamera: {fileID: 1360458978}
@@ -722,16 +722,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b414c9907fde54299bc1ff0e0a0827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 7
-  y: 3
-  h: 10
-  mapwh: 0
-  minHeightThreshold: 0.2
-  floatAccel: 10
   sprite: {fileID: 2060802502}
   shadow: {fileID: 400404380}
   map: {fileID: 1137384844}
   movements: {fileID: 967919596}
+  x: 7
+  y: 3
+  height: 0
+  waterheight: 0
+  minWaterHeight: 0
 --- !u!4 &967919595
 Transform:
   m_ObjectHideFlags: 0
@@ -754,7 +753,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 967919593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 201ae1d2c40714b4687cf6d315132a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 15
@@ -772,17 +771,9 @@ MonoBehaviour:
   mapPos: {fileID: 967919594}
   sprite_holder_go: {fileID: 2060802500}
   sprite_holder: {fileID: 2060802502}
-  last_dir: left
-  Idles:
-  - {fileID: 21300004, guid: e921b627c588cda4786739022d357504, type: 3}
-  - {fileID: 21300014, guid: e921b627c588cda4786739022d357504, type: 3}
-  - {fileID: 21300024, guid: e921b627c588cda4786739022d357504, type: 3}
-  - {fileID: 21300034, guid: e921b627c588cda4786739022d357504, type: 3}
-  - {fileID: 21300000, guid: 3be0fe8459472784ba828bdf433d6e10, type: 3}
-  - {fileID: 21300010, guid: c666bb66e8ec9dc4bb9fb3a035e64637, type: 3}
-  - {fileID: 21300012, guid: 3be0fe8459472784ba828bdf433d6e10, type: 3}
-  - {fileID: 21300000, guid: c4b01227c37c8cd4bb671d904204b056, type: 3}
-  water_movement: 1
+  last_dir: 
+  Idles: []
+  water_movement: 0
   falling: 0
   jumping: 0
   stop_moving: 0
@@ -1810,16 +1801,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b414c9907fde54299bc1ff0e0a0827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 0
-  y: 3
-  h: 5
-  mapwh: 0
-  minHeightThreshold: 0.2
-  floatAccel: 10
   sprite: {fileID: 1120617578}
   shadow: {fileID: 356917111}
   map: {fileID: 1137384844}
   movements: {fileID: 1506029526}
+  x: 0
+  y: 3
+  height: 0
+  waterheight: 0
+  minWaterHeight: 0
 --- !u!4 &1506029525
 Transform:
   m_ObjectHideFlags: 0
@@ -1842,11 +1832,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1506029523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 201ae1d2c40714b4687cf6d315132a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 1
-  deceleration: 2
+  acceleration: 15
+  deceleration: 20
   max_vel: 7.5
   hop_timer: 30
   hop_decrease: 1
@@ -1861,16 +1851,8 @@ MonoBehaviour:
   sprite_holder_go: {fileID: 1120617575}
   sprite_holder: {fileID: 1120617578}
   last_dir: 
-  Idles:
-  - {fileID: 21300004, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
-  - {fileID: 21300014, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
-  - {fileID: 21300024, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
-  - {fileID: 21300034, guid: e8c1ed5728b0f78488981c5ef08cef38, type: 3}
-  - {fileID: 21300000, guid: 56c72ff51da8e3343aabf838e4dab8a4, type: 3}
-  - {fileID: 21300010, guid: b144ff5f10cd6b544958ad3f2c0a9c05, type: 3}
-  - {fileID: 21300012, guid: 56c72ff51da8e3343aabf838e4dab8a4, type: 3}
-  - {fileID: 21300000, guid: b540bd941ec355a49a4261ea0e99f161, type: 3}
-  water_movement: 1
+  Idles: []
+  water_movement: 0
   falling: 0
   jumping: 0
   stop_moving: 0

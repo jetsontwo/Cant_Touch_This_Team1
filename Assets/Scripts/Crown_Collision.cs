@@ -65,6 +65,7 @@ public class Crown_Collision : MonoBehaviour {
     public void Put_Crown_On_Player(GameObject winner)
     {
         transform.parent = winner.transform;
+        transform.rotation = Quaternion.identity;
         if (winner.name == PLAYER1)
             player_has_crown = PLAYER1;
         else
