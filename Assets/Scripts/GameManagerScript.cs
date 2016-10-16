@@ -57,12 +57,14 @@ public class GameManagerScript : MonoBehaviour
     {
         if (player1rb.IsTouching(player2.GetComponent<Collider2D>())) {
             if (invincibilityTimer <= 0 && player_has_crown != NONE) {
+                stunPlayer(player_has_crown == PLAYER1 ? player1 : player2, stunDuration, 1600);
                 invincibilityTimer = invincibilityMaxTimer;
             }
         }
 
     }
 
+    public void stunPlayer(GameObject stunnedPlayer, float stunTime, float anglesPerSecond) {
         //Stun the player who is not it
         GameObject otherPlayer = stunnedPlayer == player1 ? player2 : player1;
 
@@ -71,10 +73,12 @@ public class GameManagerScript : MonoBehaviour
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
+        spinCoroutine = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
         StartCoroutine(spinCoroutine);
         
     }
 
+    private IEnumerator spinPlayer(GameObject player, float stunTime, float anglesPerSecond) {
         audioslap.Play();
         cc.Knocked_Off();
         float delay = 0.05f;
