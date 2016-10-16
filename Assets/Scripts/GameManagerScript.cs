@@ -49,7 +49,7 @@ public class GameManagerScript : MonoBehaviour
         playAgain.gameObject.SetActive(false);
         gameTimer.timeLeft = gameMaxTimer;
 
-        stunDuration = 1.25f;
+        stunDuration = 1f;
         camBehavior = mainCamera.GetComponent<Camera_Behavior>();
     }
     
@@ -87,7 +87,7 @@ public class GameManagerScript : MonoBehaviour
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
-        spinCoroutine = spinPlayer(1300, stunnedPlayer);
+        spinCoroutine = spinPlayer(1600, stunnedPlayer);
         StartCoroutine(spinCoroutine);
         
     }
