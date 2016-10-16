@@ -67,7 +67,7 @@ public class GameManagerScript : MonoBehaviour
         GameObject otherPlayer = player1_is_running ? player2 : player1;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
-        player2rb.velocity = newVelocity;
+        stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
         spinCoroutine = spinPlayer(1300, stunnedPlayer);
         StartCoroutine(spinCoroutine);
