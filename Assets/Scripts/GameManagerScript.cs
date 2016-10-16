@@ -17,6 +17,7 @@ public class GameManagerScript : MonoBehaviour
     private Rigidbody2D player1rb, player2rb;
     private float stunDuration;
     public int pushPower;
+    public AudioSource audioslap;
 
     private bool player1_is_running = false;
     private float invincibilityTimer;
@@ -74,6 +75,7 @@ public class GameManagerScript : MonoBehaviour
     }
 
     private IEnumerator spinPlayer(float anglesPerSecond, GameObject player) {
+        audioslap.Play();
         float delay = 0.05f;
         float stunTimeLeft = stunDuration;
         int rotateLeftOrRight = Random.Range(-1, 1) >= 0 ? 1 : -1;

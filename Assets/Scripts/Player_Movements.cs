@@ -66,7 +66,6 @@ public class Player_Movements : MonoBehaviour {
         {
             am.SetBool("moving_right", false);
             am.SetBool("moving_left", false);
-            print("heyo");
         }
         if(rb.velocity.y > -threshold && rb.velocity.y < threshold)
         {
