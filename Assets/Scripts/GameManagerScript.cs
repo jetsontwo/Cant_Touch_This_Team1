@@ -141,8 +141,10 @@ public class GameManagerScript : MonoBehaviour
         {
             if (player1_score > player2_score)
                 cc.Put_Crown_On_Player(player1);
-            else
+            else if (player2_score > player1_score)
                 cc.Put_Crown_On_Player(player2);
+            else
+                cc.Put_Crown_On_Player(null);
             gameOver.color = red;
             gameOver.fontSize = 50;
             gameOver.text = "GAME OVER";

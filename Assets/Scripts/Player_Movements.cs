@@ -123,7 +123,7 @@ public class Player_Movements : MonoBehaviour {
         // Check map for other velocities, accelerations
         Vector3 newVel = vel;
         Vector3 newPos = this.transform.position;
-        mapPos.ApplyMapFactors(accel, newVel, newPos, prevPos, out accel, out newVel, out newPos);
+        //mapPos.ApplyMapFactors(accel, newVel, newPos, prevPos, out accel, out newVel, out newPos);
 
         // Apply accelerations to velocity
         if (newPos != this.transform.position)
