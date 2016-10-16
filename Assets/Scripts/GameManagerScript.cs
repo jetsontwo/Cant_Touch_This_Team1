@@ -10,6 +10,10 @@ public class GameManagerScript : MonoBehaviour
     public Text score_1;
     public Text score_2;
     public Text gameOver;
+    public Button backToMain;
+    public Button playAgain;
+    public Object player1;
+    public Object player2;
 
     private bool player1_is_it = false;
     private float invincibilityTimer;
@@ -24,9 +28,11 @@ public class GameManagerScript : MonoBehaviour
 
 	void Start ()
     {
-        //invincibilityTimer = 0;
+        invincibilityTimer = 0;
         player1_score = 0;
         player2_score = 0;
+        backToMain.gameObject.SetActive(false);
+        playAgain.gameObject.SetActive(false);
         if (Random.value > 0.5)
         {
             player1_is_it = true;
@@ -78,6 +84,8 @@ public class GameManagerScript : MonoBehaviour
             gameOver.color = red;
             gameOver.fontSize = 50;
             gameOver.text = "GAME OVER";
+            backToMain.gameObject.SetActive(true);
+            playAgain.gameObject.SetActive(true);
         }
 	}
 }
