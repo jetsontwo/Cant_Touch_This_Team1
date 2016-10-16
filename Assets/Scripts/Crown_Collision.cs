@@ -17,6 +17,7 @@ public class Crown_Collision : MonoBehaviour {
     {
         bc = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
+        player_has_crown = NONE;
         cooldown = 0.5f;
 
     }
