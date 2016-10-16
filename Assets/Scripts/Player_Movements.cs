@@ -11,7 +11,7 @@ public class Player_Movements : MonoBehaviour {
     public SpriteRenderer sprite_holder;
     public string last_dir;
     public Sprite[] Idles;
-    public bool water_movement, falling, jumping, stop_moving, stunned;
+    public bool water_movement, falling, jumping, stop_moving;
     public Vector3 vel, accel;
 
     private Rigidbody2D rb;
@@ -113,7 +113,7 @@ public class Player_Movements : MonoBehaviour {
             }
             else
             {
-                if (!stunned)
+                if (!stop_moving)
                 {
                     accel = vel.normalized * -deceleration;
                 }
