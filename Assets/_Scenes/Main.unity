@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e2d795bbd39040943f5150e54cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaxTimer: 18
+  gameMaxTimer: 15
   invincibilityMaxTimer: 2
   gameTimer: {fileID: 1131328557}
   score_1: {fileID: 806095249}
@@ -424,7 +424,7 @@ MonoBehaviour:
   playAgain: {fileID: 1304067071}
   player1: {fileID: 1506029523}
   player2: {fileID: 967919593}
-  pushPower: 13
+  pushPower: 100
   audioslap: {fileID: 493764627}
   cc: {fileID: 1268448196}
   mainCamera: {fileID: 1360458978}
@@ -722,15 +722,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b414c9907fde54299bc1ff0e0a0827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 7
+  y: 3
+  h: 10
+  mapwh: 0
+  minHeightThreshold: 0.2
+  floatAccel: 10
   sprite: {fileID: 2060802502}
   shadow: {fileID: 400404380}
   map: {fileID: 1137384844}
   movements: {fileID: 967919596}
-  x: 0
-  y: 0
-  height: 0
-  waterheight: 0
-  minWaterHeight: 0.2
 --- !u!4 &967919595
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,7 +1034,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f8deaa082dd67dd4ab32ed70b40a07db, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1137,14 +1138,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardSprites:
-  - {fileID: 21300000, guid: 43c31e339d0cb2b46938a571cb43fc34, type: 3}
-  wallSprite: {fileID: 21300004, guid: e0abda62b0f6c064db96da71b1a52df1, type: 3}
-  waterSprite: {fileID: 21300000, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
+  - {fileID: 21300000, guid: e0abda62b0f6c064db96da71b1a52df1, type: 3}
+  wallTopSprite: {fileID: 21300002, guid: e0abda62b0f6c064db96da71b1a52df1, type: 3}
+  wallSideSprites:
+  - {fileID: 21300004, guid: e0abda62b0f6c064db96da71b1a52df1, type: 3}
+  - {fileID: 21300006, guid: e0abda62b0f6c064db96da71b1a52df1, type: 3}
+  waterSprites:
+  - {fileID: 21300000, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
+  - {fileID: 21300002, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
-  sortingSubdivisions: 3
+  sortingSubdivisions: 4
   waterVolume: 35
   initialWaterArea:
   - {x: 0, y: 0}
+  spriteMaxTimer: 0.3
+  spriteTimer: 0
 --- !u!1 &1251535994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,15 +1810,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b414c9907fde54299bc1ff0e0a0827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  x: 0
+  y: 3
+  h: 5
+  mapwh: 0
+  minHeightThreshold: 0.2
+  floatAccel: 10
   sprite: {fileID: 1120617578}
   shadow: {fileID: 356917111}
   map: {fileID: 1137384844}
   movements: {fileID: 1506029526}
-  x: 0
-  y: 0
-  height: 0
-  waterheight: 0
-  minWaterHeight: 0.2
 --- !u!4 &1506029525
 Transform:
   m_ObjectHideFlags: 0
@@ -1836,8 +1845,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23c725563a8e0b4093c654ccf1e50b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 15
-  deceleration: 20
+  acceleration: 1
+  deceleration: 2
   max_vel: 7.5
   hop_timer: 30
   hop_decrease: 1

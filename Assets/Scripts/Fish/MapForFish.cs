@@ -11,16 +11,21 @@ public enum State
 public class MapForFish : MonoBehaviour {
     
     public Sprite[] boardSprites;
-    public Sprite wallSprite;
-    public Sprite waterSprite;
+    public Sprite wallTopSprite;
+    public Sprite[] wallSideSprites;
+    public Sprite[] waterSprites;
     public Material spriteMat;
     public int sortingSubdivisions;
     public float waterVolume;
     public Vector2[] initialWaterArea;
+    public float spriteMaxTimer;
 
     private int waterArea;
+    public float spriteTimer = 0;
     private float[,] waterHeights = new float[8, 8];
     private GameObject[,] waterTiles = new GameObject[8, 8];
+    private int[,] waterTileSprites = new int[8, 8];
+    private bool switchFirsts = true;
 
     private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
@@ -58,7 +63,19 @@ public class MapForFish : MonoBehaviour {
                 {
                     Vector2 wallPosition = new Vector2(position.x, position.y - k);
                     GameObject wallInstance = new GameObject();
-                    wallInstance.AddComponent<SpriteRenderer>().sprite = wallSprite;
+                    if (k == 1)
+                    {
+                        wallInstance.AddComponent<SpriteRenderer>().sprite = wallTopSprite;
+                    }
+                    else
+                    {
+                        int rand = Random.Range(-1, wallSideSprites.Length);
+                        if (rand < 0)
+                        {
+                            rand = 0;
+                        }
+                        wallInstance.AddComponent<SpriteRenderer>().sprite = wallSideSprites[rand];
+                    }
                     wallInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
                     wallInstance.GetComponent<SpriteRenderer>().material = spriteMat;
                     wallInstance.transform.position = wallPosition;
@@ -74,7 +91,8 @@ public class MapForFish : MonoBehaviour {
             {
                 waterHeights[i, j] = 0;
                 GameObject waterInstance = new GameObject();
-                waterInstance.AddComponent<SpriteRenderer>().sprite = waterSprite;
+                waterTileSprites[i, j] = j % waterSprites.Length;
+                waterInstance.AddComponent<SpriteRenderer>().sprite = waterSprites[waterTileSprites[i, j]];
                 waterInstance.GetComponent<SpriteRenderer>().material = spriteMat;
                 waterTiles[i, j] = waterInstance;
                 waterInstance.name = "water: " + i + ", " + j;
@@ -189,16 +207,35 @@ public class MapForFish : MonoBehaviour {
 
     void UpdateWaterSprites()
     {
+        bool switchSprite = false;
+        if (spriteTimer > spriteMaxTimer)
+        {
+            switchSprite = true;
+            spriteTimer = 0;
+            switchFirsts = !switchFirsts;
+        }
+        else
+        {
+            spriteTimer += Time.deltaTime;
+        }
         for (int i = 0; i < waterTiles.GetLength(0); ++i)
         {
             for (int j = 0; j < waterTiles.GetLength(1); ++j)
             {
+                if (switchSprite)
+                {
+                    if ((switchFirsts && (i + j) % 2 == 0) || (!switchFirsts && (i + j) % 2 != 0))
+                    {
+                        waterTileSprites[i, j] = (waterTileSprites[i, j] + 1) % waterSprites.Length;
+                    }
+                }
                 if (waterTiles[i, j].GetComponent<SpriteRenderer>().enabled)
                 {
                     if (waterHeights[i, j] <= 0)
                     {
                         waterTiles[i, j].GetComponent<SpriteRenderer>().enabled = false;
                     }
+                    waterTiles[i, j].GetComponent<SpriteRenderer>().sprite = waterSprites[waterTileSprites[i, j]];
                     waterTiles[i, j].GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j] + Mathf.CeilToInt(waterHeights[i, j])) * sortingSubdivisions;
                     waterTiles[i, j].transform.position = new Vector2(i, j + heights[i, j] + waterHeights[i, j]);
                 }
@@ -212,14 +249,6 @@ public class MapForFish : MonoBehaviour {
 
             }
         }
-    }
-
-    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
-    {
-        x = Mathf.RoundToInt(screenx);
-        y = Mathf.RoundToInt(screeny - height - waterHeight);
-        newheight = heights[x, y];
-        newWaterHeight = waterHeights[x, y];
     }
 
     public int GetHeightAt(int x, int y)

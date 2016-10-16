@@ -113,14 +113,10 @@ public class Player_Movements : MonoBehaviour {
             }
             else
             {
-                //if (!stop_moving)
-                //{
-                accel = vel.normalized * -deceleration;
-                //}
-                //else {
-                //    accel = vel.normalized * -deceleration;
-                //}
-
+                if (!stop_moving)
+                {
+                    moveAccel = vel.normalized * -deceleration;
+                }
             }
         }
 
@@ -163,9 +159,8 @@ public class Player_Movements : MonoBehaviour {
 
         // Prevent player from exiting map bounds
 
-
         // Apply velocity
-        rb.velocity = vel;
+        rb.velocity = new Vector3(vel.x, vel.y + vel.z, 0);
         
         //Makes the fish face the last direction of input and turns off the animation controller to keep the fish from returning to its default position
         if (!(am.GetBool("moving_up") || am.GetBool("moving_down") || am.GetBool("moving_left") || am.GetBool("moving_right")))
@@ -177,6 +172,13 @@ public class Player_Movements : MonoBehaviour {
         {
             am.enabled = true;
         }
+    }
+
+    public void SetVelocity(float x, float y, float h)
+    {
+        vel.x = x;
+        vel.y = y;
+        vel.z = h;
     }
     
     private void Get_Idle()
