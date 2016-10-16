@@ -6,22 +6,21 @@ public class Player_Movements : MonoBehaviour {
     public float acceleration, deceleration, max_vel, hop_timer, hop_decrease, hop_speed, threshold;
     public string left_move, right_move, up_move, down_move;
     public Animator am;
-    private SpriteRenderer sprite_holder;
+    public MapPositionSensor mapPos;
+    public GameObject sprite_holder_go;
+    public SpriteRenderer sprite_holder;
     public string last_dir;
     public Sprite[] Idles;
-
-    public bool water_movement, falling, jumping, stop_moving;
+    public bool water_movement, falling, jumping, stop_moving, stunned;
     public Vector3 vel, accel;
 
     private Rigidbody2D rb;
     private float hop_timer_buffer;
-    public GameObject sprite_holder_go;
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody2D>();
         hop_timer_buffer = hop_timer;
-        sprite_holder = sprite_holder_go.GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -39,6 +38,11 @@ public class Player_Movements : MonoBehaviour {
 
         if (!stop_moving) 
         {
+            am.SetBool("moving_left", false);
+            am.SetBool("moving_right", false);
+            am.SetBool("moving_up", false);
+            am.SetBool("moving_down", false);
+
             if (Input.GetKey(left_move))
             {
                 moveAccel.x -= acceleration;
@@ -67,6 +71,23 @@ public class Player_Movements : MonoBehaviour {
                 am.SetBool("moving_up", false);
                 last_dir = "down";
             }
+
+            if (last_dir == "left")
+            {
+                am.SetBool("moving_left", true);
+            }
+            if (last_dir == "right")
+            {
+                am.SetBool("moving_right", true);
+            }
+            if (last_dir == "up")
+            {
+                am.SetBool("moving_up", true);
+            }
+            if (last_dir == "down")
+            {
+                am.SetBool("moving_down", true);
+            }
         }
 
         if (falling)
@@ -92,7 +113,10 @@ public class Player_Movements : MonoBehaviour {
             }
             else
             {
-                accel = vel.normalized * -deceleration;
+                if (!stunned)
+                {
+                    accel = vel.normalized * -deceleration;
+                }
             }
         }
 
@@ -132,6 +156,7 @@ public class Player_Movements : MonoBehaviour {
 
         // Prevent player from exiting map bounds
 
+
         // Apply velocity
         rb.velocity = vel;
         
@@ -146,9 +171,7 @@ public class Player_Movements : MonoBehaviour {
             am.enabled = true;
         }
     }
-
-
-
+    
     private void Get_Idle()
     {
         am.enabled = false;
