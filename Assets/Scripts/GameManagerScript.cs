@@ -67,11 +67,13 @@ public class GameManagerScript : MonoBehaviour
             stunnedPlayer = player1;
             otherPlayer = player2;
         }
-        else if(player_running == "Player_2")
+        else if (player_running == "Player_2")
         {
             stunnedPlayer = player2;
             otherPlayer = player1;
         }
+        else
+            return;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
