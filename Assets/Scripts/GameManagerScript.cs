@@ -18,7 +18,7 @@ public class GameManagerScript : MonoBehaviour
     private float stunDuration;
     public int pushPower;
 
-    private bool player1_is_it = false;
+    private bool player1_is_running = false;
     private float invincibilityTimer;
 
     private int player1_score;
@@ -41,7 +41,7 @@ public class GameManagerScript : MonoBehaviour
         playAgain.gameObject.SetActive(false);
         if (Random.value > 0.5)
         {
-            player1_is_it = true;
+            player1_is_running = true;
         }
         gameTimer.timeLeft = gameMaxTimer;
 
@@ -53,7 +53,7 @@ public class GameManagerScript : MonoBehaviour
         if (player1rb.IsTouching(player2.GetComponent<Collider2D>())) {
             if (invincibilityTimer <= 0) {
                 stunPlayer();
-                player1_is_it = !player1_is_it;
+                player1_is_running = !player1_is_running;
                 invincibilityTimer = invincibilityMaxTimer;
             }
         }
@@ -62,8 +62,8 @@ public class GameManagerScript : MonoBehaviour
 
     public void stunPlayer() {
         //Stun the player who is not it
-        GameObject stunnedPlayer = player1_is_it ? player1 : player2;
-        GameObject otherPlayer = player1_is_it ? player2 : player1;
+        GameObject stunnedPlayer = player1_is_running ? player1 : player2;
+        GameObject otherPlayer = player1_is_running ? player2 : player1;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - otherPlayer.transform.position).normalized * pushPower;
         player2rb.velocity = newVelocity;
@@ -94,7 +94,7 @@ public class GameManagerScript : MonoBehaviour
 	
 	void Update ()
     {
-        print(player1_is_it);
+        print(player1_is_running);
         if ((int)gameTimer.timeLeft > 0)
         {
             NotifyTouched();
@@ -102,10 +102,10 @@ public class GameManagerScript : MonoBehaviour
             {
                 invincibilityTimer -= Time.deltaTime;
             }
-            if (player1_is_it)
-                ++player2_score;
-            else
+            if (player1_is_running)
                 ++player1_score;
+            else
+                ++player2_score;
             if (player1_score > player2_score)
             {
                 score_1.color = green;
