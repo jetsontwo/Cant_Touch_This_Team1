@@ -50,7 +50,7 @@ public class MapPositionSensor : MonoBehaviour
         if (!movements.falling)
         {
             map.GetTile(this.transform.position.x, this.transform.position.y, height, waterheight, out newx, out newy, out newheight, out newwaterheight);
-            if (newheight + Mathf.FloorToInt(newwaterheight) < height + Mathf.FloorToInt(waterheight))
+            if (newheight + Mathf.FloorToInt(newwaterheight) < height + Mathf.FloorToInt(waterheight) + 0.8f)
             {
                 movements.falling = true;
                 x = newx;
@@ -58,7 +58,7 @@ public class MapPositionSensor : MonoBehaviour
                 height = newheight;
                 waterheight = newwaterheight;
             }
-            else if (newheight + Mathf.FloorToInt(newwaterheight) > height + Mathf.FloorToInt(waterheight))
+            else if (newheight + Mathf.FloorToInt(newwaterheight) > height + Mathf.FloorToInt(waterheight) + 0.8f)
             {
                 if (newy != y)
                 {

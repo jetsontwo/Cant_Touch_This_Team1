@@ -30,12 +30,12 @@ public class MapForFish : MonoBehaviour {
 
     private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 1, 1, 1, 1, 0, 0},
-                                        {0, 0, 1, 2, 2, 1, 0, 0},
-                                        {0, 0, 1, 2, 2, 1, 0, 0},
-                                        {0, 0, 1, 1, 1, 1, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0}};
+                                        {0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 1, 1, 1, 1, 0, 0},
+                                        {0, 0, 1, 1, 1, 1, 0, 0}};
 
     private int[,] tiles = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
                                       {0, 0, 0, 0, 0, 0, 0, 0},
@@ -254,6 +254,14 @@ public class MapForFish : MonoBehaviour {
 
             }
         }
+    }
+
+    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
+    {
+        x = Mathf.RoundToInt(screenx);
+        y = Mathf.RoundToInt(screeny - height - waterHeight);
+        newheight = heights[x, y];
+        newWaterHeight = waterHeights[x, y];
     }
 
     public int GetHeightAt(int x, int y)

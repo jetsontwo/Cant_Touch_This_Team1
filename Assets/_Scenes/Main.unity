@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e2d795bbd39040943f5150e54cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaxTimer: 15
+  gameMaxTimer: 800
   invincibilityMaxTimer: 2
   gameTimer: {fileID: 1131328557}
   score_1: {fileID: 806095249}
@@ -730,7 +730,7 @@ MonoBehaviour:
   y: 3
   height: 0
   waterheight: 0
-  minWaterHeight: 0
+  minWaterHeight: 0.2
 --- !u!4 &967919595
 Transform:
   m_ObjectHideFlags: 0
@@ -1153,9 +1153,12 @@ MonoBehaviour:
   - {fileID: 21300002, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
   sortingSubdivisions: 4
-  waterVolume: 35
+  waterVolume: 50
   initialWaterArea:
   - {x: 0, y: 0}
+  - {x: 7, y: 0}
+  - {x: 0, y: 7}
+  - {x: 7, y: 7}
   spriteMaxTimer: 0.3
   spriteTimer: 0
 --- !u!1 &1251535994
@@ -1823,7 +1826,7 @@ MonoBehaviour:
   y: 3
   height: 0
   waterheight: 0
-  minWaterHeight: 0
+  minWaterHeight: 0.2
 --- !u!4 &1506029525
 Transform:
   m_ObjectHideFlags: 0
