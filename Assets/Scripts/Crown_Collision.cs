@@ -31,7 +31,7 @@ public class Crown_Collision : MonoBehaviour {
         bc.enabled = true;
         player_has_crown = NONE;
 
-        rb.velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f));
+        //rb.velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(-5f, 5f));
     }
 
 
