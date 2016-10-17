@@ -11,54 +11,50 @@ public class MapPositionSensor : MonoBehaviour
     private Vector3 lastPos;
     public int x;
     public int y;
-    public int height;
-    public float waterheight;
     public float minWaterHeight;
+    private float oldWaterHeight;
 
     // Use this for initialization
     void Start()
     {
-        map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y, out height, out waterheight);
+        map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y);
         lastPos = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        int newheight, newx, newy;
-        float newwaterheight;
+        int newx, newy;
 
         // Prevent movement out of bounds
         if (this.transform.position.x < 0)
         {
             this.transform.position = new Vector3(0, this.transform.position.y, 0);
         }
-        if (this.transform.position.y < height + waterheight)
+        if (this.transform.position.y < map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y))
         {
-            this.transform.position = new Vector3(this.transform.position.x, height + waterheight, 0);
+            this.transform.position = new Vector3(this.transform.position.x, map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y), 0);
         }
         if (this.transform.position.x > map.GetWidth() - 1)
         {
             this.transform.position = new Vector3(map.GetWidth() - 1, this.transform.position.y, 0);
         }
-        if (this.transform.position.y > map.GetHeight() + height + waterheight - 1)
+        if (this.transform.position.y > map.GetHeight() + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y) - 1)
         {
-            this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + height + waterheight - 1, 0);
+            this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y) - 1, 0);
         }
 
         // Get tile information from the map
         if (!movements.falling)
         {
-            map.GetTile(this.transform.position.x, this.transform.position.y, height, waterheight, out newx, out newy, out newheight, out newwaterheight);
-            if (newheight + Mathf.FloorToInt(newwaterheight) < height + Mathf.FloorToInt(waterheight) + 0.8f)
+            map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out newx, out newy);
+            if (map.GetHeightAt(newx, newy) + Mathf.FloorToInt(map.GetWaterHeightAt(newx, newy)) < map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y)))
             {
                 movements.falling = true;
                 x = newx;
                 y = newy;
-                height = newheight;
-                waterheight = newwaterheight;
             }
-            else if (newheight + Mathf.FloorToInt(newwaterheight) > height + Mathf.FloorToInt(waterheight) + 0.8f)
+            else if (map.GetHeightAt(newx, newy) + Mathf.FloorToInt(map.GetWaterHeightAt(newx, newy)) > map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y)))
             {
                 if (newy != y)
                 {
@@ -75,11 +71,11 @@ public class MapPositionSensor : MonoBehaviour
             {
                 x = newx;
                 y = newy;
-                waterheight = newwaterheight;
-                height = newheight;
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + (map.GetWaterHeightAt(x, y) - oldWaterHeight), 0);
+                oldWaterHeight = map.GetWaterHeightAt(x, y);
             }
 
-            if (waterheight > minWaterHeight)
+            if (map.GetWaterHeightAt(x, y) > minWaterHeight)
             {
                 if (!movements.water_movement)
                 {
@@ -102,18 +98,18 @@ public class MapPositionSensor : MonoBehaviour
             {
                 sprite.sortingOrder = (-y + map.GetHeightAt(x, y)) * map.sortingSubdivisions + 2;
             }
-            shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - waterheight, 0);
-            float shadowScale = 0.2f + Mathf.Pow(0.5f, waterheight);
+            shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterHeightAt(x, y), 0);
+            float shadowScale = 0.2f + Mathf.Pow(0.5f, map.GetWaterHeightAt(x, y));
             shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
         else
         {
-            if (this.transform.position.y <= (y + height + waterheight))
+            if (this.transform.position.y <= (y + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y)))
             {
                 movements.falling = false;
             }
-            shadow.transform.position = new Vector3(this.transform.position.x, y + height, 0);
-            float shadowScale = 1f - (this.transform.position.y - y - height);
+            shadow.transform.position = new Vector3(this.transform.position.x, y + map.GetHeightAt(x, y), 0);
+            float shadowScale = 1f - (this.transform.position.y - y - map.GetHeightAt(x, y));
             if (shadowScale < 0.5f)
             {
                 shadowScale = 0.5f;

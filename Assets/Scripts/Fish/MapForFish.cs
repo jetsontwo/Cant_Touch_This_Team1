@@ -22,29 +22,45 @@ public class MapForFish : MonoBehaviour {
 
     private int waterArea;
     public float spriteTimer = 0;
-    private float[,] waterHeights = new float[8, 8];
-    private GameObject[,] waterTiles = new GameObject[8, 8];
-    private int[,] waterTileSprites = new int[8, 8];
+    private float[,] waterHeights = new float[16, 16];
+    private GameObject[,] waterTiles = new GameObject[16, 16];
+    private int[,] waterTileSprites = new int[16, 16];
     private bool switchFirsts = true;
     private float max_height = 2;
 
-    private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 0, 0, 0, 0, 0, 0},
-                                        {0, 0, 1, 1, 1, 1, 0, 0},
-                                        {0, 0, 1, 1, 1, 1, 0, 0}};
+    private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 2, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0},
+                                        {0, 0, 0, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2},
+                                        {0, 0, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 1, 2, 2, 2},
+                                        {0, 0, 0, 1, 1, 1, 1, 2, 2, 1, 1, 1, 0, 0, 0, 0},
+                                        {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 2, 0, 0},
+                                        {0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-    private int[,] tiles = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0},
-                                      {0, 0, 0, 0, 0, 0, 0, 0}};
+    private int[,] tiles = new int[,]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1},
+                                      {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1},
+                                      {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     void Start()
     {
@@ -115,7 +131,51 @@ public class MapForFish : MonoBehaviour {
     {
         HashSet<Vector2> newWaterArea = new HashSet<Vector2>();
 
+        for (int i = 0; i < initialWaterArea.Length; ++i)
+        {
+            waterHeights[(int)initialWaterArea[i].x, (int)initialWaterArea[i].y] += Mathf.Sin(Time.realtimeSinceStartup);
+        }
+
+        // Reduce water until matches initial volume
+        ReduceWater();
+
         // Spread water out
+        SpreadWater();
+        
+        // Update water sprites
+        UpdateWaterSprites();
+    }
+
+    void ReduceWater()
+    {
+        float tempVolume = 0;
+        for (int i = 0; i < waterHeights.GetLength(0); ++i)
+        {
+            for (int j = 0; j < waterHeights.GetLength(1); ++j)
+            {
+                tempVolume += waterHeights[i, j];
+            }
+        }
+        while (tempVolume > waterVolume)
+        {
+            for (int i = 0; i < waterHeights.GetLength(0); ++i)
+            {
+                for (int j = 0; j < waterHeights.GetLength(1); ++j)
+                {
+                    waterHeights[i, j] -= 0.05f;
+                    tempVolume -= 0.05f;
+                    if (tempVolume <= waterVolume)
+                    {
+                        i = waterHeights.GetLength(0);
+                        j = waterHeights.GetLength(1);
+                    }
+                }
+            }
+        }
+    }
+
+    void SpreadWater()
+    {
         for (int i = 0; i < waterHeights.GetLength(0); ++i)
         {
             for (int j = 0; j < waterHeights.GetLength(1); ++j)
@@ -206,8 +266,6 @@ public class MapForFish : MonoBehaviour {
                 }
             }
         }
-        // Update water sprites
-        UpdateWaterSprites();
     }
 
     void UpdateWaterSprites()
@@ -256,12 +314,10 @@ public class MapForFish : MonoBehaviour {
         }
     }
 
-    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
+    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y)
     {
         x = Mathf.RoundToInt(screenx);
         y = Mathf.RoundToInt(screeny - height - waterHeight);
-        newheight = heights[x, y];
-        newWaterHeight = waterHeights[x, y];
     }
 
     public int GetHeightAt(int x, int y)
