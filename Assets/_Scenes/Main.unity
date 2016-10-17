@@ -726,10 +726,10 @@ MonoBehaviour:
   shadow: {fileID: 400404380}
   map: {fileID: 1137384844}
   movements: {fileID: 967919596}
-  x: 5
-  y: 5
+  x: 15
+  y: 8
   height: 0
-  tolerance: 0.2
+  waterheight: 0
   minWaterHeight: 0.2
 --- !u!4 &967919595
 Transform:
@@ -738,7 +738,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 967919593}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 15, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1155,7 +1155,7 @@ MonoBehaviour:
   - {fileID: 21300002, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
   sortingSubdivisions: 4
-  waterVolume: 180
+  waterVolume: 70
   initialWaterArea:
   - {x: 0, y: 7}
   - {x: 0, y: 0}
@@ -1713,9 +1713,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a723be7e8fc1e534ea75315bb006b445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minCameraSize: 4
   object1: {fileID: 1506029523}
   object2: {fileID: 967919593}
-  shakeCam: 0
+  shakeCam: 1
 --- !u!1 &1471054083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,9 +1826,9 @@ MonoBehaviour:
   map: {fileID: 1137384844}
   movements: {fileID: 1506029526}
   x: 0
-  y: 5
+  y: 8
   height: 0
-  tolerance: 0.2
+  waterheight: 0
   minWaterHeight: 0.2
 --- !u!4 &1506029525
 Transform:
@@ -1836,7 +1837,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506029523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:

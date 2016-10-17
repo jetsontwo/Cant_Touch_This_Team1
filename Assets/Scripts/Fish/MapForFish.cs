@@ -129,12 +129,20 @@ public class MapForFish : MonoBehaviour {
 
     void Update()
     {
-        HashSet<Vector2> newWaterArea = new HashSet<Vector2>();
-        waterHeights[0, 0] += Mathf.Sin(Time.realtimeSinceStartup);
-        waterHeights[waterTiles.GetLength(0) - 1, waterTiles.GetLength(1) - 1] += Mathf.Sin(Time.realtimeSinceStartup);
+        //for (int i = 0; i < waterHeights.GetLength(0); ++i)
+        //{
+        //    for (int j = 0; j < waterHeights.GetLength(1); ++j)
+        //    {
+        //        waterHeights[i, j] += Mathf.Sin(Time.realtimeSinceStartup) * Time.deltaTime;
+        //        if (waterHeights[i, j] < 0)
+        //        {
+        //            waterHeights[i, j] = 0;
+        //        }
+        //    }
+        //}
 
         // Reduce water until matches initial volume
-        ReduceWater();
+        //ReduceWater();
 
         // Spread water out
         SpreadWater();
@@ -161,6 +169,11 @@ public class MapForFish : MonoBehaviour {
                 {
                     waterHeights[i, j] -= 0.05f;
                     tempVolume -= 0.05f;
+                    if (waterHeights[i, j] < 0)
+                    {
+                        tempVolume += -waterHeights[i, j];
+                        waterHeights[i, j] = 0;
+                    }
                     if (tempVolume <= waterVolume)
                     {
                         i = waterHeights.GetLength(0);
@@ -311,10 +324,12 @@ public class MapForFish : MonoBehaviour {
         }
     }
 
-    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y)
+    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y, out int newheight, out float newWaterHeight)
     {
-        x = Mathf.FloorToInt(screenx);
-        y = Mathf.FloorToInt(screeny - height - waterHeight);
+        x = Mathf.RoundToInt(screenx);
+        y = Mathf.RoundToInt(screeny - height - waterHeight);
+        newheight = heights[x, y];
+        newWaterHeight = waterHeights[x, y];
     }
 
     public int GetHeightAt(int x, int y)
@@ -345,3 +360,4 @@ public class MapForFish : MonoBehaviour {
         return tiles.GetLength(1);
     }
 }
+
