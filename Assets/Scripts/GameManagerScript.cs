@@ -69,12 +69,19 @@ public class GameManagerScript : MonoBehaviour
     public void stunPlayer(GameObject stunnedPlayer, GameObject other, float stunTime, float anglesPerSecond) {
         //Stun the player who is not it
 
+
         camBehavior.shakeCam = true;
 
         Vector2 newVelocity = (stunnedPlayer.transform.position - other.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
+        if (spinCoroutine != null) {
+            StopCoroutine(spinCoroutine);
+        }
+       
         spinCoroutine = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
+        
+        
         StartCoroutine(spinCoroutine);
         
     }
