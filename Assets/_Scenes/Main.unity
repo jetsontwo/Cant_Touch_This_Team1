@@ -611,7 +611,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 625462149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5, y: 7, z: 0}
+  m_LocalPosition: {x: 7.5, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -728,9 +728,8 @@ MonoBehaviour:
   movements: {fileID: 967919596}
   x: 15
   y: 8
-  height: 0
-  waterheight: 0
   minWaterHeight: 0.2
+  threshold: 0.1
 --- !u!4 &967919595
 Transform:
   m_ObjectHideFlags: 0
@@ -1155,7 +1154,7 @@ MonoBehaviour:
   - {fileID: 21300002, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
   sortingSubdivisions: 4
-  waterVolume: 70
+  waterVolume: 150
   initialWaterArea:
   - {x: 0, y: 7}
   - {x: 0, y: 0}
@@ -1827,9 +1826,8 @@ MonoBehaviour:
   movements: {fileID: 1506029526}
   x: 0
   y: 8
-  height: 0
-  waterheight: 0
   minWaterHeight: 0.2
+  threshold: 0.1
 --- !u!4 &1506029525
 Transform:
   m_ObjectHideFlags: 0
