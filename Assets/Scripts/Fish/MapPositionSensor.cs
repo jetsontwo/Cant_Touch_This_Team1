@@ -85,15 +85,6 @@ public class MapPositionSensor : MonoBehaviour
                     movements.water_movement = false;
                 }
             }
-
-            if (movements.water_movement)
-            {
-                sprite.sortingOrder = (-y + map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y))) * map.sortingSubdivisions + 2;
-            }
-            else
-            {
-                sprite.sortingOrder = (-y + map.GetHeightAt(x, y)) * map.sortingSubdivisions + 2;
-            }
             shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterHeightAt(x, y), 0);
             float shadowScale = 0.2f + Mathf.Pow(0.5f, map.GetWaterHeightAt(x, y));
             shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
@@ -112,6 +103,7 @@ public class MapPositionSensor : MonoBehaviour
             }
             shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
+        sprite.sortingOrder = (-y + map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y))) * map.sortingSubdivisions + 2;
         shadow.GetComponent<SpriteRenderer>().sortingOrder = sprite.sortingOrder - 1;
         lastPos = this.transform.position;
     }

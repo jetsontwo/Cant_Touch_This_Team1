@@ -91,7 +91,7 @@ public class GameManagerScript : MonoBehaviour
         } 
         else {
             if (spinCoroutineP2 != null) {
-                StopCoroutine(spinCoroutineP1);
+                StopCoroutine(spinCoroutineP2);
                 spinCoroutineP2 = null;
             }
             spinCoroutineP2 = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
