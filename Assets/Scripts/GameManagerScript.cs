@@ -77,6 +77,7 @@ public class GameManagerScript : MonoBehaviour
 
         if (spinCoroutine != null) {
             StopCoroutine(spinCoroutine);
+            spinCoroutine = null;
         }
        
         spinCoroutine = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
