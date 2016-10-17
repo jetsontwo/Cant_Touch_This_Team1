@@ -186,13 +186,6 @@ public class Player_Movements : MonoBehaviour {
 
         prevPos = this.transform.position;
     }
-
-    public void SetVelocity(float x, float y, float h)
-    {
-        vel.x = x;
-        vel.y = y;
-        vel.z = h;
-    }
     
     private void Get_Idle()
     {

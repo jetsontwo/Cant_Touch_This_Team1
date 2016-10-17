@@ -11,21 +11,22 @@ public class MapPositionSensor : MonoBehaviour
     private Vector3 lastPos;
     public int x;
     public int y;
+    public int height;
+    public float tolerance;
     public float minWaterHeight;
     private float oldWaterHeight;
 
     // Use this for initialization
     void Start()
     {
-        map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y);
+        map.GetTile(x, y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y);
+        this.transform.position = new Vector3(x, y + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y), 0);
         lastPos = this.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        int newx, newy;
-
         // Prevent movement out of bounds
         if (this.transform.position.x < 0)
         {
@@ -44,79 +45,71 @@ public class MapPositionSensor : MonoBehaviour
             this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y) - 1, 0);
         }
 
+        int newx, newy;
+
         // Get tile information from the map
-        if (!movements.falling)
+        map.GetTile(this.transform.position.x, this.transform.position.y, height, map.GetWaterHeightAt(x, y), out newx, out newy);
+
+        float newHeight = map.GetHeightAt(newx, newy);// + map.GetWaterHeightAt(newx, newy);
+        float oldHeight = map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y);
+            
+        if (newHeight - oldHeight < tolerance)
         {
-            map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out newx, out newy);
-            if (map.GetHeightAt(newx, newy) + Mathf.FloorToInt(map.GetWaterHeightAt(newx, newy)) < map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y)))
+            if (oldHeight - newHeight - map.GetWaterHeightAt(newx, newy) > tolerance)
             {
                 movements.falling = true;
-                x = newx;
-                y = newy;
             }
-            else if (map.GetHeightAt(newx, newy) + Mathf.FloorToInt(map.GetWaterHeightAt(newx, newy)) > map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y)))
+            x = newx;
+            y = newy;
+            height = map.GetHeightAt(newx, newy);
+        }
+        else if (newHeight - oldHeight > tolerance)
+        {
+            if (newy != y)
             {
-                if (newy != y)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
-                    this.transform.position = new Vector3(this.transform.position.x, lastPos.y, 0);
-                }
-                if (newx != x)
-                {
-                    GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
-                    this.transform.position = new Vector3(lastPos.x, this.transform.position.y, 0);
-                }
+                GetComponent<Rigidbody2D>().velocity = new Vector2(GetComponent<Rigidbody2D>().velocity.x, 0);
+                this.transform.position = new Vector3(this.transform.position.x, lastPos.y, 0);
             }
-            else
+            if (newx != x)
             {
-                x = newx;
-                y = newy;
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + (map.GetWaterHeightAt(x, y) - oldWaterHeight), 0);
-                oldWaterHeight = map.GetWaterHeightAt(x, y);
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, GetComponent<Rigidbody2D>().velocity.y);
+                this.transform.position = new Vector3(lastPos.x, this.transform.position.y, 0);
             }
-
-            if (map.GetWaterHeightAt(x, y) > minWaterHeight)
-            {
-                if (!movements.water_movement)
-                {
-                    movements.water_movement = true;
-                }
-            }
-            else
-            {
-                if (movements.water_movement)
-                {
-                    movements.water_movement = false;
-                }
-            }
-
-            if (movements.water_movement)
-            {
-                sprite.sortingOrder = (-y + map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y))) * map.sortingSubdivisions + 2;
-            }
-            else
-            {
-                sprite.sortingOrder = (-y + map.GetHeightAt(x, y)) * map.sortingSubdivisions + 2;
-            }
-            shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterHeightAt(x, y), 0);
-            float shadowScale = 0.2f + Mathf.Pow(0.5f, map.GetWaterHeightAt(x, y));
-            shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
         else
         {
-            if (this.transform.position.y <= (y + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y)))
-            {
-                movements.falling = false;
-            }
-            shadow.transform.position = new Vector3(this.transform.position.x, y + map.GetHeightAt(x, y), 0);
-            float shadowScale = 1f - (this.transform.position.y - y - map.GetHeightAt(x, y));
-            if (shadowScale < 0.5f)
-            {
-                shadowScale = 0.5f;
-            }
-            shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
+            movements.falling = false;
+            x = newx;
+            y = newy;
+            height = map.GetHeightAt(newx, newy);
+            this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + (map.GetWaterHeightAt(x, y) - oldWaterHeight), 0);
         }
+
+        if (map.GetWaterHeightAt(x, y) > minWaterHeight)
+        {
+            movements.water_movement = true;
+        }
+        else
+        {
+            movements.water_movement = false;
+        }
+
+        sprite.sortingOrder = (-y + map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y))) * map.sortingSubdivisions + 2;
         shadow.GetComponent<SpriteRenderer>().sortingOrder = sprite.sortingOrder - 1;
+
+        shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterHeightAt(x, y), 0);
+        float shadowScale = 1f - map.GetWaterHeightAt(x, y) / (this.transform.position.y - map.GetWaterHeightAt(x, y));
+        if (shadowScale < 0.5f)
+        {
+            shadowScale = 0.5f;
+        }
+        if (shadowScale > 1)
+        {
+            shadowScale = 1;
+        }
+        shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
+
         lastPos = this.transform.position;
+        oldWaterHeight = map.GetWaterHeightAt(x, y);
     }
 }

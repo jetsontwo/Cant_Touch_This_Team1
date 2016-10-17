@@ -130,11 +130,8 @@ public class MapForFish : MonoBehaviour {
     void Update()
     {
         HashSet<Vector2> newWaterArea = new HashSet<Vector2>();
-
-        for (int i = 0; i < initialWaterArea.Length; ++i)
-        {
-            waterHeights[(int)initialWaterArea[i].x, (int)initialWaterArea[i].y] += Mathf.Sin(Time.realtimeSinceStartup);
-        }
+        waterHeights[0, 0] += Mathf.Sin(Time.realtimeSinceStartup);
+        waterHeights[waterTiles.GetLength(0) - 1, waterTiles.GetLength(1) - 1] += Mathf.Sin(Time.realtimeSinceStartup);
 
         // Reduce water until matches initial volume
         ReduceWater();
@@ -316,8 +313,8 @@ public class MapForFish : MonoBehaviour {
 
     public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y)
     {
-        x = Mathf.RoundToInt(screenx);
-        y = Mathf.RoundToInt(screeny - height - waterHeight);
+        x = Mathf.FloorToInt(screenx);
+        y = Mathf.FloorToInt(screeny - height - waterHeight);
     }
 
     public int GetHeightAt(int x, int y)
@@ -331,6 +328,10 @@ public class MapForFish : MonoBehaviour {
 
     public float GetWaterHeightAt(int x, int y)
     {
+        if (x < 0 || x > waterHeights.GetLength(0) || y < 0 || y > waterHeights.GetLength(1))
+        {
+            Debug.Log("Trying to access: " + x + ", " + y);
+        }
         return waterHeights[x, y];
     }
 
