@@ -31,7 +31,8 @@ public class GameManagerScript : MonoBehaviour
     private Color white = new Color(255, 255, 255);
     private Color red = new Color(255, 0, 0);
 
-    private IEnumerator spinCoroutine;
+    private IEnumerator spinCoroutineP1;
+    private IEnumerator spinCoroutineP2;
 
     private const string PLAYER1 = "Player_1";
     private const string PLAYER2 = "Player_2";
@@ -75,16 +76,29 @@ public class GameManagerScript : MonoBehaviour
         Vector2 newVelocity = (stunnedPlayer.transform.position - other.transform.position).normalized * pushPower;
         stunnedPlayer.GetComponent<Rigidbody2D>().velocity = newVelocity;
 
-        if (spinCoroutine != null) {
-            StopCoroutine(spinCoroutine);
-            spinCoroutine = null;
+        startPlayerStunCoroutine(stunnedPlayer, stunTime, anglesPerSecond);
+    }
+
+    private void startPlayerStunCoroutine(GameObject stunnedPlayer, float stunTime, float anglesPerSecond) {
+        if (stunnedPlayer == player1) {
+            if (spinCoroutineP1 != null) {
+                StopCoroutine(spinCoroutineP1);
+                spinCoroutineP1 = null;
+            }
+            spinCoroutineP1 = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
+
+            StartCoroutine(spinCoroutineP1);
+        } 
+        else {
+            if (spinCoroutineP2 != null) {
+                StopCoroutine(spinCoroutineP1);
+                spinCoroutineP2 = null;
+            }
+            spinCoroutineP2 = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
+
+            StartCoroutine(spinCoroutineP2);
         }
-       
-        spinCoroutine = spinPlayer(stunnedPlayer, stunTime, anglesPerSecond);
-        
-        
-        StartCoroutine(spinCoroutine);
-        
+            
     }
 
     private IEnumerator spinPlayer(GameObject player, float stunTime, float anglesPerSecond) {
