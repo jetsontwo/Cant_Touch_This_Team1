@@ -29,13 +29,13 @@ public class Player_Movements : MonoBehaviour {
 	void Update () {
 
         vel = rb.velocity;
-        Vector3 moveAccel = new Vector3();
+        Vector3 moveAccel = Vector3.zero;
 
         am.SetBool("in_water", water_movement);
 
         if (hop_timer > 0)
         {
-            hop_timer -= hop_decrease;
+            hop_timer -= hop_decrease * Time.deltaTime;
         }
 
         if (!stop_moving) 
@@ -48,29 +48,21 @@ public class Player_Movements : MonoBehaviour {
             if (Input.GetKey(left_move))
             {
                 moveAccel.x -= acceleration;
-                am.SetBool("moving_right", false);
-                am.SetBool("moving_left", true);
                 last_dir = "left";
             }
             if (Input.GetKey(right_move))
             {
                 moveAccel.x += acceleration;
-                am.SetBool("moving_right", true);
-                am.SetBool("moving_left", false);
                 last_dir = "right";
             }
             if (Input.GetKey(up_move))
             {
                 moveAccel.y += acceleration;
-                am.SetBool("moving_up", true);
-                am.SetBool("moving_down", false);
                 last_dir = "up";
             }
             if (Input.GetKey(down_move))
             {
                 moveAccel.y -= acceleration;
-                am.SetBool("moving_down", true);
-                am.SetBool("moving_up", false);
                 last_dir = "down";
             }
 
@@ -96,10 +88,6 @@ public class Player_Movements : MonoBehaviour {
         {
             accel.z = -1;
         }
-        else if (jumping)
-        {
-            accel.z = 0.5f;
-        }
         else
         {
             if (moveAccel.magnitude > 0)
@@ -111,11 +99,15 @@ public class Player_Movements : MonoBehaviour {
                         moveAccel = moveAccel.normalized * hop_speed;
                         hop_timer = hop_timer_buffer;
                     }
+                    
                 }
             }
             else
             {
-                moveAccel = vel.normalized * -deceleration;
+                if (water_movement)
+                    moveAccel = vel.normalized * -deceleration;
+                else
+                    moveAccel = vel.normalized * -deceleration * 4;
                 
             }
         }
@@ -176,7 +168,7 @@ public class Player_Movements : MonoBehaviour {
         //Makes the fish face the last direction of input and turns off the animation controller to keep the fish from returning to its default position
         if (!(am.GetBool("moving_up") || am.GetBool("moving_down") || am.GetBool("moving_left") || am.GetBool("moving_right")))
         {
-            Get_Idle();
+            //Get_Idle();
             sprite_holder_go.transform.position = gameObject.transform.position + new Vector3(0, 0.1f, 0);
         }
         else
