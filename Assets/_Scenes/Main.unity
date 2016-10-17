@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0e2d795bbd39040943f5150e54cae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMaxTimer: 800
+  gameMaxTimer: 90
   invincibilityMaxTimer: 2
   gameTimer: {fileID: 1131328557}
   score_1: {fileID: 806095249}
