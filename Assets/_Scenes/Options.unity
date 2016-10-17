@@ -103,7 +103,7 @@ GameObject:
   - 114: {fileID: 435266331}
   - 114: {fileID: 435266335}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Option3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,8 +180,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300004, guid: a463cc1eff2be8c43a48fe8503abe5e5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -224,9 +224,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2becb2a4c699bd4bada7cb92f8114c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  option1: {fileID: 0}
-  option2: {fileID: 0}
-  option3: {fileID: 0}
+  option1: {fileID: 994987262}
+  option2: {fileID: 1768550774}
+  option3: {fileID: 435266331}
   gameMaxTimer: 0
 --- !u!1 &633749467
 GameObject:
@@ -603,7 +603,7 @@ GameObject:
   - 114: {fileID: 994987262}
   - 114: {fileID: 994987263}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Option1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -647,8 +647,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a463cc1eff2be8c43a48fe8503abe5e5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -724,9 +724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2becb2a4c699bd4bada7cb92f8114c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  option1: {fileID: 0}
-  option2: {fileID: 0}
-  option3: {fileID: 0}
+  option1: {fileID: 994987262}
+  option2: {fileID: 1768550774}
+  option3: {fileID: 435266331}
   gameMaxTimer: 0
 --- !u!1 &1096527032
 GameObject:
@@ -1059,7 +1059,7 @@ GameObject:
   - 114: {fileID: 1768550774}
   - 114: {fileID: 1768550775}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Option2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1103,8 +1103,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300002, guid: a463cc1eff2be8c43a48fe8503abe5e5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1180,9 +1180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2becb2a4c699bd4bada7cb92f8114c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  option1: {fileID: 0}
-  option2: {fileID: 0}
-  option3: {fileID: 0}
+  option1: {fileID: 994987262}
+  option2: {fileID: 1768550774}
+  option3: {fileID: 435266331}
   gameMaxTimer: 0
 --- !u!1 &1840882038
 GameObject:
