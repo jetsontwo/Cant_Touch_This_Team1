@@ -5,7 +5,7 @@ public class Camera_Behavior : MonoBehaviour {
 
     private Camera mainCamera;
     private float cameraZoomRatio;
-    private float minCameraSize;
+    public float minCameraSize;
 
     private float baseCamSize, totalBaseCamSize, sizeYLimit;
 
@@ -18,7 +18,6 @@ public class Camera_Behavior : MonoBehaviour {
 	void Start () {
         mainCamera = GetComponent<Camera>();
         cameraZoomRatio = 8;
-        minCameraSize = 5;
 
         baseCamSize = mainCamera.orthographicSize;
         totalBaseCamSize = baseCamSize * 2;
