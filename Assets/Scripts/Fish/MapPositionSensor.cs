@@ -8,16 +8,18 @@ public class MapPositionSensor : MonoBehaviour
 
     public MapForFish map;
     public Player_Movements movements;
-    private Vector3 lastPos;
     public int x;
     public int y;
     public float minWaterHeight;
     public float threshold;
 
+    public Vector3 lastPos;
+    public float lastWaterDepth;
+
     // Use this for initialization
     void Start()
     {
-        map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out x, out y);
+        map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), out x, out y);
         lastPos = this.transform.position;
     }
 
@@ -31,30 +33,38 @@ public class MapPositionSensor : MonoBehaviour
         {
             this.transform.position = new Vector3(0, this.transform.position.y, 0);
         }
-        if (this.transform.position.y < map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y))
+        if (this.transform.position.y < map.GetHeightAt(x, y))
         {
-            this.transform.position = new Vector3(this.transform.position.x, map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y), 0);
+            this.transform.position = new Vector3(this.transform.position.x, map.GetHeightAt(x, y), 0);
         }
         if (this.transform.position.x > map.GetWidth() - 1)
         {
             this.transform.position = new Vector3(map.GetWidth() - 1, this.transform.position.y, 0);
         }
-        if (this.transform.position.y > map.GetHeight() + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y) - 1)
+        if (this.transform.position.y > map.GetHeight() - 1 + map.GetHeightAt(x, y))
         {
-            this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y) - 1, 0);
+            this.transform.position = new Vector3(this.transform.position.x, map.GetHeight() + map.GetHeightAt(x, y) - 1, 0);
         }
 
         // Get tile information from the map
         if (!movements.falling)
         {
-            map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), map.GetWaterHeightAt(x, y), out newx, out newy);
-            if (map.GetHeightAt(newx, newy) - map.GetHeightAt(x, y) - map.GetWaterHeightAt(x, y) <= threshold)
+            map.GetTile(this.transform.position.x, this.transform.position.y, map.GetHeightAt(x, y), out newx, out newy);
+            if (map.GetGroundHeightAt(newx, newy) - map.GetHeightAt(x, y) <= threshold)
             {
-                x = newx;
-                y = newy;
-                if (map.GetHeightAt(newx, newy) + map.GetWaterHeightAt(newx, newy) - map.GetHeightAt(x, y) - map.GetWaterHeightAt(x, y) > threshold)
+                if (map.GetGroundHeightAt(newx, newy) < map.GetGroundHeightAt(x, y))
                 {
                     movements.falling = true;
+                }
+                if (x != newx || y != newy)
+                {
+                    map.ApplyWaterForceAt(newx, newy, 1.2f);
+                }
+                x = newx;
+                y = newy;
+                if (map.GetWaterDepthAt(x, y) <= 0)
+                {
+                    lastWaterDepth = 0;
                 }
             }
             else
@@ -70,41 +80,42 @@ public class MapPositionSensor : MonoBehaviour
                     this.transform.position = new Vector3(lastPos.x, this.transform.position.y, 0);
                 }
             }
-
-            if (map.GetWaterHeightAt(x, y) > minWaterHeight)
+            if (!movements.falling)
             {
-                if (!movements.water_movement)
+                if (map.GetWaterDepthAt(x, y) > minWaterHeight)
                 {
-                    movements.water_movement = true;
+                    if (!movements.water_movement)
+                    {
+                        movements.water_movement = true;
+                    }
                 }
-            }
-            else
-            {
-                if (movements.water_movement)
+                else
                 {
-                    movements.water_movement = false;
+                    if (movements.water_movement)
+                    {
+                        movements.water_movement = false;
+                    }
                 }
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + map.GetWaterDepthAt(x, y) - lastWaterDepth, this.transform.position.z);
             }
-            shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterHeightAt(x, y), 0);
-            float shadowScale = 0.2f + Mathf.Pow(0.5f, map.GetWaterHeightAt(x, y));
-            shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
         else
         {
-            if (this.transform.position.y <= (y + map.GetHeightAt(x, y) + map.GetWaterHeightAt(x, y)))
+            if (this.transform.position.y <= (y + map.GetHeightAt(x, y)))
             {
+                this.transform.position = new Vector3(this.transform.position.x, lastPos.y, this.transform.position.z);
                 movements.falling = false;
+                if (map.GetWaterDepthAt(x, y) > 0)
+                {
+                    map.ApplyWaterForceAt(x, y, 1.5f);
+                }
             }
-            shadow.transform.position = new Vector3(this.transform.position.x, y + map.GetHeightAt(x, y), 0);
-            float shadowScale = 1f - (this.transform.position.y - y - map.GetHeightAt(x, y));
-            if (shadowScale < 0.5f)
-            {
-                shadowScale = 0.5f;
-            }
-            shadow.transform.localScale = new Vector3(shadowScale, shadowScale, 0);
         }
-        sprite.sortingOrder = (-y + map.GetHeightAt(x, y) + Mathf.FloorToInt(map.GetWaterHeightAt(x, y))) * map.sortingSubdivisions + 2;
+        sprite.sortingOrder = (-y + Mathf.FloorToInt(map.GetHeightAt(x, y))) * map.sortingSubdivisions + 2;
         shadow.GetComponent<SpriteRenderer>().sortingOrder = sprite.sortingOrder - 1;
+        shadow.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - map.GetWaterDepthAt(x, y), 0);
+        shadow.transform.localScale = new Vector3(1, 1, 1);
         lastPos = this.transform.position;
+        lastWaterDepth = map.GetWaterDepthAt(x, y);
     }
 }

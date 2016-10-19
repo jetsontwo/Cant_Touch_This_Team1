@@ -1026,7 +1026,9 @@ MonoBehaviour:
   x: 15
   y: 8
   minWaterHeight: 0.2
-  threshold: 0.1
+  threshold: 0.5
+  lastPos: {x: 0, y: 0, z: 0}
+  lastWaterDepth: 0
 --- !u!4 &967919595
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,14 +1421,11 @@ MonoBehaviour:
   waterSprites:
   - {fileID: 21300000, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   - {fileID: 21300002, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
+  waterSideSprite: {fileID: 21300004, guid: dc93b7bad4183ec4a8eb21c1f69e2f6e, type: 3}
   spriteMat: {fileID: 2100000, guid: 1f333debdedcd7241bf576b25ed70bdf, type: 2}
   sortingSubdivisions: 4
-  waterVolume: 150
-  initialWaterArea:
-  - {x: 0, y: 7}
-  - {x: 0, y: 0}
-  - {x: 7, y: 0}
-  - {x: 7, y: 7}
+  waterVolume: 240
+  wavePropagationSpeed: 5
   spriteMaxTimer: 0.3
   spriteTimer: 0
 --- !u!1001 &1192503462
@@ -2140,7 +2139,9 @@ MonoBehaviour:
   x: 0
   y: 8
   minWaterHeight: 0.2
-  threshold: 0.1
+  threshold: 0.5
+  lastPos: {x: 0, y: 0, z: 0}
+  lastWaterDepth: 0
 --- !u!4 &1506029525
 Transform:
   m_ObjectHideFlags: 0

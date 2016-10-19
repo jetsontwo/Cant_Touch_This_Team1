@@ -86,10 +86,13 @@ public class Player_Movements : MonoBehaviour {
 
         if (falling)
         {
-            accel.z = -1;
+            accel.z = -30;
+            moveAccel = Vector3.zero;
         }
         else
         {
+            accel.z = 0;
+            vel.z = 0;
             if (moveAccel.magnitude > 0)
             {
                 if (!water_movement)
@@ -104,11 +107,12 @@ public class Player_Movements : MonoBehaviour {
             }
             else
             {
-                if (water_movement)
-                    moveAccel = vel.normalized * -deceleration;
-                else
-                    moveAccel = vel.normalized * -deceleration * 4;
-                
+                Vector2 twodimdecel = new Vector2(vel.x, vel.y).normalized * -deceleration;
+                if (!water_movement)
+                {
+                    twodimdecel *= 4;
+                }
+                moveAccel = twodimdecel;
             }
         }
 

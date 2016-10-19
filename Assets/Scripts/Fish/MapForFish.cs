@@ -14,19 +14,22 @@ public class MapForFish : MonoBehaviour {
     public Sprite wallTopSprite;
     public Sprite[] wallSideSprites;
     public Sprite[] waterSprites;
+    public Sprite waterSideSprite;
     public Material spriteMat;
     public int sortingSubdivisions;
     public float waterVolume;
-    public Vector2[] initialWaterArea;
+    public float wavePropagationSpeed;  // Should be < 1/waterSimulationResolution
     public float spriteMaxTimer;
-
-    private int waterArea;
+    
     public float spriteTimer = 0;
     private float[,] waterHeights = new float[16, 16];
+    private float[,] waterVelocities = new float[16, 16];
     private GameObject[,] waterTiles = new GameObject[16, 16];
+    private GameObject[,] waterSides = new GameObject[16, 16];
     private int[,] waterTileSprites = new int[16, 16];
     private bool switchFirsts = true;
     private float max_height = 2;
+    private float initialWaterHeight;
 
     private int[,] heights = new int[,]{{0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
                                         {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0},
@@ -71,7 +74,7 @@ public class MapForFish : MonoBehaviour {
                 Vector2 position = new Vector2(i, j + heights[i, j]);
                 GameObject tileInstance = new GameObject();
                 tileInstance.AddComponent<SpriteRenderer>().sprite = boardSprites[tiles[i, j]];
-                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
+                tileInstance.GetComponent<SpriteRenderer>().sortingOrder = (-j + heights[i, j]) * sortingSubdivisions;
                 tileInstance.GetComponent<SpriteRenderer>().material = spriteMat;
                 float shade = 0.8f + 0.2f * heights[i, j] / max_height;
                 tileInstance.GetComponent<SpriteRenderer>().color = new Color(shade, shade, shade);
@@ -95,7 +98,7 @@ public class MapForFish : MonoBehaviour {
                         }
                         wallInstance.AddComponent<SpriteRenderer>().sprite = wallSideSprites[rand];
                     }
-                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j]) * sortingSubdivisions;
+                    wallInstance.GetComponent<SpriteRenderer>().sortingOrder = (-(j + k) + heights[i, j]) * sortingSubdivisions;
                     wallInstance.GetComponent<SpriteRenderer>().material = spriteMat;
                     shade = 0.8f + 0.2f * k / max_height;
                     tileInstance.GetComponent<SpriteRenderer>().color = new Color(shade, shade, shade);
@@ -105,12 +108,18 @@ public class MapForFish : MonoBehaviour {
                 }
             }
         }
-        waterArea = initialWaterArea.Length;
+        initialWaterHeight = waterVolume / (waterTiles.GetLength(0) * waterTiles.GetLength(1));
+        for (int i = 0; i < waterHeights.GetLength(0); ++i)
+        {
+            for (int j = 0; j < waterHeights.GetLength(1); ++j)
+            {
+                waterHeights[i, j] = initialWaterHeight;
+            }
+        }
         for (int i = 0; i < waterTiles.GetLength(0); ++i)
         {
             for (int j = 0; j < waterTiles.GetLength(1); ++j)
             {
-                waterHeights[i, j] = 0;
                 GameObject waterInstance = new GameObject();
                 waterTileSprites[i, j] = j % waterSprites.Length;
                 waterInstance.AddComponent<SpriteRenderer>().sprite = waterSprites[waterTileSprites[i, j]];
@@ -118,163 +127,74 @@ public class MapForFish : MonoBehaviour {
                 waterTiles[i, j] = waterInstance;
                 waterInstance.name = "water: " + i + ", " + j;
                 waterInstance.transform.parent = this.transform;
+                
+                GameObject waterSideInstance = new GameObject();
+                waterSideInstance.AddComponent<SpriteRenderer>().sprite = waterSideSprite;
+                waterSideInstance.GetComponent<SpriteRenderer>().material = spriteMat;
+                waterSideInstance.transform.parent = this.transform;
+                waterSideInstance.name = "water side: " + i + ", " + j;
+                waterSides[i, j] = waterSideInstance;
             }
         }
-        for (int i = 0; i < initialWaterArea.Length; ++i)
-        {
-            waterHeights[(int)initialWaterArea[i].x, (int)initialWaterArea[i].y] = waterVolume / initialWaterArea.Length;
-        }
-        UpdateWaterSprites();
+        /*
+        waterHeights[0, 0] += 0.2f;
+        waterHeights[waterHeights.GetLength(0) - 1, 0] += 0.2f;
+        waterHeights[0, waterHeights.GetLength(1) - 1] += 0.2f;
+        waterHeights[waterHeights.GetLength(0) - 1, waterHeights.GetLength(1) - 1] += 0.2f;*/
     }
 
     void Update()
     {
-
-        //for (int i = 0; i < waterHeights.GetLength(0); ++i)
-        //{
-        //    for (int j = 0; j < waterHeights.GetLength(1); ++j)
-        //    {
-        //        waterHeights[i, j] += Mathf.Sin(Time.realtimeSinceStartup) * Time.deltaTime;
-        //        if (waterHeights[i, j] < 0)
-        //        {
-        //            waterHeights[i, j] = 0;
-        //        }
-        //    }
-        //}
-
-        // Reduce water until matches initial volume
-        ReduceWater();
-
-        // Spread water out
-        SpreadWater();
-        
-        // Update water sprites
+        UpdateWater();
         UpdateWaterSprites();
     }
 
-    void ReduceWater()
+    void UpdateWater()
     {
-        float tempVolume = 0;
+        float[,] tempWaterHeights = new float[waterHeights.GetLength(0), waterHeights.GetLength(1)];
         for (int i = 0; i < waterHeights.GetLength(0); ++i)
         {
             for (int j = 0; j < waterHeights.GetLength(1); ++j)
             {
-                tempVolume += waterHeights[i, j];
-            }
-        }
-        while (tempVolume > waterVolume)
-        {
-            for (int i = 0; i < waterHeights.GetLength(0); ++i)
-            {
-                for (int j = 0; j < waterHeights.GetLength(1); ++j)
+                if (waterHeights[i, j] < heights[i, j])
                 {
-                    waterHeights[i, j] -= 0.05f;
-                    tempVolume -= 0.05f;
-                    if (waterHeights[i, j] < 0)
-                    {
-                        tempVolume += -waterHeights[i, j];
-                        waterHeights[i, j] = 0;
-                    }
-                    if (tempVolume <= waterVolume)
-                    {
-                        i = waterHeights.GetLength(0);
-                        j = waterHeights.GetLength(1);
-                    }
+                    waterVelocities[i, j] = 0;
+                }
+                float leftHeight = waterHeights[i, j];
+                float rightHeight = leftHeight;
+                float upHeight = leftHeight;
+                float downHeight = leftHeight;
+                if (i - 1 >= 0)
+                {
+                    leftHeight = waterHeights[i - 1, j];
+                }
+                if (i + 1 <= waterHeights.GetLength(0) - 1)
+                {
+                    rightHeight = waterHeights[i + 1, j];
+                }
+                if (j + 1 <= waterHeights.GetLength(1) - 1)
+                {
+                    upHeight = waterHeights[i, j + 1];
+                }
+                if (j - 1 >= 0)
+                {
+                    downHeight = waterHeights[i, j - 1];
+                }
+                float force = wavePropagationSpeed * wavePropagationSpeed * (leftHeight + rightHeight + upHeight + downHeight - 4 * waterHeights[i, j]);
+                waterVelocities[i, j] += force * Time.deltaTime;
+                waterVelocities[i, j] *= 0.999f;
+                tempWaterHeights[i, j] = waterHeights[i, j] + waterVelocities[i, j] * Time.deltaTime;
+                if (Mathf.Abs(waterVelocities[i, j]) < 0.01f)
+                {
+                    tempWaterHeights[i, j] = initialWaterHeight;
                 }
             }
         }
-    }
-
-    void SpreadWater()
-    {
         for (int i = 0; i < waterHeights.GetLength(0); ++i)
         {
             for (int j = 0; j < waterHeights.GetLength(1); ++j)
             {
-                // check right
-                if (waterHeights[i, j] > 0 && i < waterHeights.GetLength(0) - 1 && heights[i + 1, j] + waterHeights[i + 1, j] < heights[i, j] + waterHeights[i, j])
-                {
-                    if (waterHeights[i + 1, j] == 0)
-                    {
-                        ++waterArea;
-                    }
-                    float diff = (waterHeights[i, j] + heights[i, j] + waterHeights[i + 1, j] + heights[i + 1, j]) / 2f;
-                    waterHeights[i + 1, j] = diff - heights[i + 1, j];
-                    waterHeights[i, j] = diff - heights[i, j];
-                    if (waterHeights[i, j] <= 0)
-                    {
-                        waterHeights[i, j] = 0;
-                        --waterArea;
-                    }
-                    if (waterHeights[i + 1, j] <= 0)
-                    {
-                        waterHeights[i + 1, j] = 0;
-                        --waterArea;
-                    }
-                }
-                // check left
-                if (waterHeights[i, j] > 0 && i > 0 && heights[i - 1, j] + waterHeights[i - 1, j] < heights[i, j] + waterHeights[i, j])
-                {
-                    if (waterHeights[i - 1, j] == 0)
-                    {
-                        ++waterArea;
-                    }
-                    float diff = (waterHeights[i, j] + heights[i, j] + waterHeights[i - 1, j] + heights[i - 1, j]) / 2f;
-                    waterHeights[i - 1, j] = diff - heights[i - 1, j];
-                    waterHeights[i, j] = diff - heights[i, j];
-                    if (waterHeights[i, j] <= 0)
-                    {
-                        waterHeights[i, j] = 0;
-                        --waterArea;
-                    }
-                    if (waterHeights[i - 1, j] <= 0)
-                    {
-                        waterHeights[i - 1, j] = 0;
-                        --waterArea;
-                    }
-                }
-                // check up
-                if (waterHeights[i, j] > 0 && j < waterHeights.GetLength(1) - 1 && heights[i, j + 1] + waterHeights[i, j + 1] < heights[i, j] + waterHeights[i, j])
-                {
-                    if (waterHeights[i, j + 1] == 0)
-                    {
-                        ++waterArea;
-                    }
-                    float diff = (waterHeights[i, j] + heights[i, j] + waterHeights[i, j + 1] + heights[i, j + 1]) / 2f;
-                    waterHeights[i, j + 1] = diff - heights[i, j + 1];
-                    waterHeights[i, j] = diff - heights[i, j];
-                    if (waterHeights[i, j] <= 0)
-                    {
-                        waterHeights[i, j] = 0;
-                        --waterArea;
-                    }
-                    if (waterHeights[i, j + 1] <= 0)
-                    {
-                        waterHeights[i, j + 1] = 0;
-                        --waterArea;
-                    }
-                }
-                // check down
-                if (waterHeights[i, j] > 0 && j > 0 && heights[i, j - 1] + waterHeights[i, j - 1] < heights[i, j] + waterHeights[i, j])
-                {
-                    if (waterHeights[i, j - 1] == 0)
-                    {
-                        ++waterArea;
-                    }
-                    float diff = (waterHeights[i, j] + heights[i, j] + waterHeights[i, j - 1] + heights[i, j - 1]) / 2f;
-                    waterHeights[i, j - 1] = diff - heights[i, j - 1];
-                    waterHeights[i, j] = diff - heights[i, j];
-                    if (waterHeights[i, j] <= 0)
-                    {
-                        waterHeights[i, j] = 0;
-                        --waterArea;
-                    }
-                    if (waterHeights[i, j - 1] <= 0)
-                    {
-                        waterHeights[i, j - 1] = 0;
-                        --waterArea;
-                    }
-                }
+                waterHeights[i, j] = tempWaterHeights[i, j];
             }
         }
     }
@@ -303,50 +223,47 @@ public class MapForFish : MonoBehaviour {
                         waterTileSprites[i, j] = (waterTileSprites[i, j] + 1) % waterSprites.Length;
                     }
                 }
+                waterTiles[i, j].GetComponent<SpriteRenderer>().enabled = waterHeights[i, j] > heights[i, j];
                 if (waterTiles[i, j].GetComponent<SpriteRenderer>().enabled)
                 {
-                    if (waterHeights[i, j] <= 0)
-                    {
-                        waterTiles[i, j].GetComponent<SpriteRenderer>().enabled = false;
-                    }
                     waterTiles[i, j].GetComponent<SpriteRenderer>().sprite = waterSprites[waterTileSprites[i, j]];
-                    waterTiles[i, j].GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + heights[i, j] + Mathf.CeilToInt(waterHeights[i, j])) * sortingSubdivisions;
-                    waterTiles[i, j].transform.position = new Vector2(i, j + heights[i, j] + waterHeights[i, j]);
+                    waterTiles[i, j].GetComponent<SpriteRenderer>().sortingOrder = (-(int)j + Mathf.RoundToInt(waterHeights[i, j])) * sortingSubdivisions;
+                    waterTiles[i, j].transform.position = new Vector2(i, j + waterHeights[i, j]);
+                    waterSides[i, j].GetComponent<SpriteRenderer>().sortingOrder = (-j + Mathf.RoundToInt(waterHeights[i, j])) * sortingSubdivisions;
+                    waterSides[i, j].transform.position = new Vector2(i, j + waterHeights[i, j] - 1);
+                    waterTiles[i, j].GetComponent<SpriteRenderer>().sortingOrder = waterTiles[i, j].GetComponent<SpriteRenderer>().sortingOrder;
                 }
-                else
-                {
-                    if (waterHeights[i, j] > 0)
-                    {
-                        waterTiles[i, j].GetComponent<SpriteRenderer>().enabled = true;
-                    }
-                }
-
             }
         }
     }
 
-    public void GetTile(float screenx, float screeny, int height, float waterHeight, out int x, out int y)
+    public void GetTile(float screenx, float screeny, float height, out int x, out int y)
     {
         x = Mathf.RoundToInt(screenx);
-        y = Mathf.RoundToInt(screeny - height - waterHeight);
+        y = Mathf.RoundToInt(screeny - height);
     }
 
-    public int GetHeightAt(int x, int y)
+    public float GetHeightAt(int x, int y)
     {
-        if (x < 0 || x > tiles.GetLength(0) || y < 0 || y > tiles.GetLength(1))
+        if (heights[x, y] > waterHeights[x, y])
         {
-            Debug.Log("Trying to access: " + x + ", " + y);
-        }
-        return heights[x, y];
-    }
-
-    public float GetWaterHeightAt(int x, int y)
-    {
-        if (x < 0 || x > waterHeights.GetLength(0) || y < 0 || y > waterHeights.GetLength(1))
-        {
-            Debug.Log("Trying to access: " + x + ", " + y);
+            return heights[x, y];
         }
         return waterHeights[x, y];
+    }
+
+    public float GetWaterDepthAt(int x, int y)
+    {
+        if (heights[x, y] > waterHeights[x, y])
+        {
+            return 0;
+        }
+        return waterHeights[x, y] - heights[x, y];
+    }
+
+    public float GetGroundHeightAt(int x, int y)
+    {
+        return heights[x, y];
     }
 
     public int GetWidth()
@@ -357,6 +274,11 @@ public class MapForFish : MonoBehaviour {
     public int GetHeight()
     {
         return tiles.GetLength(1);
+    }
+
+    public void ApplyWaterForceAt(int x, int y, float force)
+    {
+        waterHeights[x, y] = waterHeights[x, y] / force;
     }
 }
 
