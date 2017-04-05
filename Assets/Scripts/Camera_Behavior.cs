@@ -6,6 +6,7 @@ public class Camera_Behavior : MonoBehaviour {
     private Camera mainCamera;
     private float cameraZoomRatio;
     public float minCameraSize;
+    public float moveSpeed;
 
     private float baseCamSize, totalBaseCamSize, sizeYLimit;
 
@@ -29,14 +30,13 @@ public class Camera_Behavior : MonoBehaviour {
         {
             pastValues[i] = mainCamera.orthographicSize;
         }
-
     }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
         //Puts camera between the 2 players
         Vector3 midpointBetweenPlayers = (object1.transform.position + object2.transform.position) / 2;
-        transform.position = midpointBetweenPlayers + new Vector3(0, 0, -10);
+        transform.position = Vector3.Lerp(transform.position, midpointBetweenPlayers + new Vector3(0, 0, -10), moveSpeed * Time.fixedDeltaTime);
 
         changeCameraSize();
 
